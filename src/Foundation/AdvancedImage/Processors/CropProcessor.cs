@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace AdvancedImage.Processors
+﻿namespace AdvancedImage.Processors
 {
     public class CropProcessor
     {
+        private static readonly string[] IMAGE_EXTENSIONS = { "bmp", "jpeg", "jpg", "png", "gif" };
     }
-}d
+}
