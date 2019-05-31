@@ -1,13 +1,57 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using Sitecore.Data.Items;
 using System.IO;
+using System.Linq;
 using ImageProcessor.Imaging;
+using Sitecore.Diagnostics;
+using Sitecore.Resources.Media;
 
 namespace AdvancedImage.Processors
 {
     public class CropProcessor
     {
         private static readonly string[] IMAGE_EXTENSIONS = { "bmp", "jpeg", "jpg", "png", "gif" };
+
+        public void Process(GetMediaStreamPipelineArgs args)
+        {
+            Assert.ArgumentNotNull(args, "args");
+
+            var outputStream = args.OutputStream;
+            if (outputStream == null)
+            {
+                return;
+            }
+
+            if (!IMAGE_EXTENSIONS.Any(i => i.Equals(args.MediaData.Extension, StringComparison.InvariantCultureIgnoreCase)))
+            {
+                return;
+            }
+
+            var cx = args.Options.CustomOptions["cx"];
+            var cy = args.Options.CustomOptions["cy"];
+            var width = args.Options.CustomOptions["cw"];
+            var height = args.Options.CustomOptions["ch"];
+            float x, y;
+            int w, h;
+
+            if (!string.IsNullOrEmpty(cx) && !string.IsNullOrEmpty(cy) && float.TryParse(cx, out x) && float.TryParse(cy, out y) &&
+                !string.IsNullOrEmpty(width) && Int32.TryParse(width, out w) && !string.IsNullOrEmpty(height) && Int32.TryParse(height, out h))
+            {
+                var outputStrm = Stream.Synchronized(this.GetCroppedImage(args.MediaData.Extension, w, h, x, y, outputStream.MediaItem));
+                args.OutputStream = new MediaStream(outputStrm, args.MediaData.Extension, outputStream.MediaItem);
+            }
+            else if (args.Options.Thumbnail)
+            {
+                TransformationOptions transformationOptions = args.Options.GetTransformationOptions();
+                MediaStream thumbnailStream = args.MediaData.GetThumbnailStream(transformationOptions);
+
+                if (thumbnailStream != null)
+                {
+                    args.OutputStream = thumbnailStream;
+                }
+            }
+        }
 
         private Stream GetCroppedImage(string extension, int width, int height, float cx, float cy, MediaItem mediaItem)
         {
