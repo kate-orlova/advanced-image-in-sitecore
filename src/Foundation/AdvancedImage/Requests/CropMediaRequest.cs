@@ -7,5 +7,6 @@ namespace AdvancedImage.Requests
     {
         private HttpRequest innerRequest;
         private MediaUrlOptions mediaQueryString;
+        private MediaUri mediaUri;
     }
 }
