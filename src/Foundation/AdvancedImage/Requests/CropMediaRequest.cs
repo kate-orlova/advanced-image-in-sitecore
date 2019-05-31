@@ -6,5 +6,6 @@ namespace AdvancedImage.Requests
     public class CropMediaRequest : MediaRequest
     {
         private HttpRequest innerRequest;
+        private MediaUrlOptions mediaQueryString;
     }
 }
