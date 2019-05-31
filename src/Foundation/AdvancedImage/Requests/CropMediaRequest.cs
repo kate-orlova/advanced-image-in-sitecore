@@ -1,6 +1,8 @@
-﻿namespace AdvancedImage.Requests
+﻿using Sitecore.Resources.Media;
+
+namespace AdvancedImage.Requests
 {
-    public class CropMediaRequest
+    public class CropMediaRequest : MediaRequest
     {
     }
 }
