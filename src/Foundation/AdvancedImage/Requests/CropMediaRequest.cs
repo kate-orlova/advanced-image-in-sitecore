@@ -10,6 +10,12 @@ namespace AdvancedImage.Requests
         private MediaUrlOptions mediaQueryString;
         private MediaUri mediaUri;
         private MediaOptions options;
+
+        protected override MediaOptions GetOptions()
+        {
+            return this.options;
+        }
+
         public override MediaRequest Clone()
         {
             Assert.IsTrue((bool)(base.GetType() == typeof(CropMediaRequest)), "The Clone() method must be overridden to support prototyping.");
