@@ -14,6 +14,13 @@ namespace AdvancedImage.Requests
         protected override MediaOptions GetOptions()
         {
             var queryString = this.InnerRequest.QueryString;
+            if (queryString != null && !string.IsNullOrEmpty(queryString.Get("cx")))
+            {
+            }
+            else
+            {
+               
+            }
 
             return this.options;
         }
