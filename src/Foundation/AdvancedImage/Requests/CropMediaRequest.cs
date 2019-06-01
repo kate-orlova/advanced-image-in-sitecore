@@ -18,6 +18,11 @@ namespace AdvancedImage.Requests
             {
                 options = new MediaOptions();
                 ProcessCustomParameters(options);
+
+                if (!options.CustomOptions.ContainsKey("cx") && !string.IsNullOrEmpty(queryString.Get("cx")))
+                {
+                    options.CustomOptions.Add("cx", queryString.Get("cx"));
+                }
             }
             else
             {
