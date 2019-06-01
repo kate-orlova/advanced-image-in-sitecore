@@ -13,6 +13,8 @@ namespace AdvancedImage.Requests
 
         protected override MediaOptions GetOptions()
         {
+            var queryString = this.InnerRequest.QueryString;
+
             return this.options;
         }
 
