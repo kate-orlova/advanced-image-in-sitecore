@@ -16,6 +16,8 @@ namespace AdvancedImage.Requests
             var queryString = this.InnerRequest.QueryString;
             if (queryString != null && !string.IsNullOrEmpty(queryString.Get("cx")))
             {
+                options = new MediaOptions();
+                ProcessCustomParameters(options);
             }
             else
             {
