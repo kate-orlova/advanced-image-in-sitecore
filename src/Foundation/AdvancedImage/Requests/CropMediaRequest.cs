@@ -21,10 +21,22 @@ namespace AdvancedImage.Requests
             }
             else
             {
-               
+                MediaUrlOptions mediaQueryString = GetMediaQueryString();
+                options = new MediaOptions
+                {
+                    AllowStretch = mediaQueryString.AllowStretch,
+                    BackgroundColor = mediaQueryString.BackgroundColor,
+                    IgnoreAspectRatio = mediaQueryString.IgnoreAspectRatio,
+                    Scale = mediaQueryString.Scale,
+                    Width = mediaQueryString.Width,
+                    Height = mediaQueryString.Height,
+                    MaxWidth = mediaQueryString.MaxWidth,
+                    MaxHeight = mediaQueryString.MaxHeight,
+                    Thumbnail = mediaQueryString.Thumbnail
+                };
             }
 
-            return this.options;
+            return options;
         }
 
         public override MediaRequest Clone()
