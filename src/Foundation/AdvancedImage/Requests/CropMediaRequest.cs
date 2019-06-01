@@ -23,6 +23,11 @@ namespace AdvancedImage.Requests
                 {
                     options.CustomOptions.Add("cx", queryString.Get("cx"));
                 }
+
+                if (!options.CustomOptions.ContainsKey("cy") && !string.IsNullOrEmpty(queryString.Get("cy")))
+                {
+                    options.CustomOptions.Add("cy", queryString.Get("cy"));
+                }
             }
             else
             {
