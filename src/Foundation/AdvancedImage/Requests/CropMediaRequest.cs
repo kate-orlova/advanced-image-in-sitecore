@@ -5,6 +5,9 @@ using Sitecore.Resources.Media;
 
 namespace AdvancedImage.Requests
 {
+    /// <summary>
+    ///  This class ensures that additional custom parameters for focus cropping are cached in .ini file within /App_Data/ folder.
+    /// </summary>
     public class CropMediaRequest : MediaRequest
     {
         private HttpRequest innerRequest;
