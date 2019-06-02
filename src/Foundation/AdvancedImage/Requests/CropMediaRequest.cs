@@ -58,6 +58,16 @@ namespace AdvancedImage.Requests
                 {
                     options.UseMediaCache = false;
                 }
+
+                string[] strArray = queryString.AllKeys;
+                for (int i = 0; i < strArray.Length; i = (int)(i + 1))
+                {
+                    string str = strArray[i];
+                    if ((str != null) && (queryString.Get(str) != null))
+                    {
+                        options.CustomOptions[str] = queryString.Get(str);
+                    }
+                }
             }
 
             return options;
