@@ -70,6 +70,11 @@ namespace AdvancedImage.Requests
                 }
             }
 
+            if (!IsRawUrlSafe)
+            {
+                options = new MediaOptions();
+            }
+
             return options;
         }
 
