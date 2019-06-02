@@ -1,4 +1,5 @@
 ﻿using System.Web;
+using Sitecore.Configuration;
 using Sitecore.Diagnostics;
 using Sitecore.Resources.Media;
 
@@ -72,6 +73,15 @@ namespace AdvancedImage.Requests
 
             if (!IsRawUrlSafe)
             {
+                if (Settings.Media.RequestProtection.LoggingEnabled)
+                {
+                    string urlReferrer = this.GetUrlReferrer();
+                    Log.SingleError(string.Format("MediaRequestProtection: An invalid or missing hash value has been encountered. The expected hash value is {0}, Media URL: {1}, Referring URL: {2}",
+                            HashingUtils.GetAssetUrlHash(this.InnerRequest.Path),
+                            this.InnerRequest.Path,
+                            string.IsNullOrEmpty(urlReferrer) ? ((object)"(empty)") : ((object)urlReferrer)),
+                        this);
+                }
                 options = new MediaOptions();
             }
 
