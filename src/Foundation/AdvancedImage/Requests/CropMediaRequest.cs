@@ -33,6 +33,11 @@ namespace AdvancedImage.Requests
                 {
                     options.CustomOptions.Add("cw", queryString.Get("cw"));
                 }
+
+                if (!options.CustomOptions.ContainsKey("ch") && !string.IsNullOrEmpty(queryString.Get("ch")))
+                {
+                    options.CustomOptions.Add("ch", queryString.Get("ch"));
+                }
             }
             else
             {
