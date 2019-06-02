@@ -54,6 +54,10 @@ namespace AdvancedImage.Requests
                     MaxHeight = mediaQueryString.MaxHeight,
                     Thumbnail = mediaQueryString.Thumbnail
                 };
+                if (mediaQueryString.DisableMediaCache)
+                {
+                    options.UseMediaCache = false;
+                }
             }
 
             return options;
