@@ -13,5 +13,10 @@ namespace AdvancedImage.Fields.Editor
         public IEnumerable<AdvancedImageEditorItem> Images { get; set; }
 
         public AdvancedImageEditorDetailsModel Details { get; set; }
+
+        public AdvancedImageGalleryEditorModel()
+        {
+            Details = new AdvancedImageEditorDetailsModel();
+        }
     }
 }
