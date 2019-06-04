@@ -93,6 +93,7 @@
     <Compile Include="Fields\Editor\AdvancedImageEditorDetailsModel.cs" />
     <Compile Include="Fields\Editor\AdvancedImageEditorItem.cs" />
     <Compile Include="Fields\Editor\AdvancedImageEditorThumbnailsModel.cs" />
+    <Compile Include="Fields\Editor\AdvancedImageEditorUpdateModel.cs" />
     <Compile Include="Processors\CropProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Requests\CropMediaRequest.cs" />
