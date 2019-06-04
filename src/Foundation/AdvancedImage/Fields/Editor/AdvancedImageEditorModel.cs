@@ -11,5 +11,10 @@
         public AdvancedImageEditorItem Image { get; set; }
 
         public AdvancedImageEditorDetailsModel Details { get; set; }
+
+        public AdvancedImageEditorModel()
+        {
+            Details = new AdvancedImageEditorDetailsModel();
+        }
     }
 }
