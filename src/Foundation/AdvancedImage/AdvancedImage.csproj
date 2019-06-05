@@ -88,6 +88,7 @@
   <ItemGroup>
     <Content Include="Fields\Slider\css\jquery-ui.min.css" />
     <Content Include="Fields\Slider\js\jquery-ui.min.js" />
+    <Content Include="Fields\Slider\template.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
