@@ -1,4 +1,5 @@
-﻿using Sitecore.Shell.Applications.ContentEditor;
+﻿using Sitecore.Diagnostics;
+using Sitecore.Shell.Applications.ContentEditor;
 using Sitecore.Web.UI.HtmlControls;
 
 namespace AdvancedImage.Fields
@@ -12,7 +13,8 @@ namespace AdvancedImage.Fields
 
         public void SetValue(string value)
         {
-            throw new System.NotImplementedException();
+            Assert.ArgumentNotNull(value, "value");
+            Value = value;
         }
     }
 }
