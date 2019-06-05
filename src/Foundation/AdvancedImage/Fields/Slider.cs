@@ -7,7 +7,7 @@ namespace AdvancedImage.Fields
     {
         public string GetValue()
         {
-            throw new System.NotImplementedException();
+            return Value;
         }
 
         public void SetValue(string value)
