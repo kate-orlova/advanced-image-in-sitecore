@@ -7,6 +7,10 @@ namespace AdvancedImage.Fields
 {
     public class Slider : Input, IContentField
     {
+        private const string IS_DEBUG_FIELD_NAME = "IsDebug";
+        private const string FROM_FIELD_NAME = "From";
+        private const string TO_FIELD_NAME = "To";
+        private const string ASSETS_FOLDER_NAME = "Fields\\Slider\\";
         public string Source { get; set; }
         protected bool IsDebug { get; private set; }
         protected int From { get; private set; }
