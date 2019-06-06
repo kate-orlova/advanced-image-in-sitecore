@@ -1,4 +1,5 @@
-﻿using Sitecore.Diagnostics;
+﻿using System;
+using Sitecore.Diagnostics;
 using Sitecore.Shell.Applications.ContentEditor;
 using Sitecore.Web.UI.HtmlControls;
 
@@ -25,6 +26,11 @@ namespace AdvancedImage.Fields
         {
             Assert.ArgumentNotNull(value, "value");
             Value = value;
+        }
+        protected override void OnPreRender(EventArgs e)
+        {
+            base.OnPreRender(e);
+            base.ServerProperties["Value"] = base.ServerProperties["Value"];
         }
     }
 }
