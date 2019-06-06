@@ -7,6 +7,7 @@ namespace AdvancedImage.Fields
     public class Slider : Input, IContentField
     {
         public string Source { get; set; }
+        protected bool IsDebug { get; private set; }
 
         public Slider()
         {
