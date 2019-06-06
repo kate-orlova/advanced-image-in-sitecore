@@ -2,6 +2,7 @@
 using Sitecore.Diagnostics;
 using Sitecore.Shell.Applications.ContentEditor;
 using Sitecore.Web.UI.HtmlControls;
+using Sitecore.Web.UI.Sheer;
 
 namespace AdvancedImage.Fields
 {
@@ -43,6 +44,11 @@ namespace AdvancedImage.Fields
             {
                 Sitecore.Context.ClientPage.Modified = true;
             }
+        }
+        public override void HandleMessage(Message message)
+        {
+            Assert.ArgumentNotNull(message, "message");
+            base.HandleMessage(message);
         }
     }
 }
