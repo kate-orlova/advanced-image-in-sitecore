@@ -32,5 +32,13 @@ namespace AdvancedImage.Fields
             base.OnPreRender(e);
             base.ServerProperties["Value"] = base.ServerProperties["Value"];
         }
+        protected override void SetModified()
+        {
+            base.SetModified();
+            if (base.TrackModified)
+            {
+                Sitecore.Context.ClientPage.Modified = true;
+            }
+        }
     }
 }
