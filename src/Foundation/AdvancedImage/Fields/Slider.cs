@@ -9,6 +9,7 @@ namespace AdvancedImage.Fields
         public string Source { get; set; }
         protected bool IsDebug { get; private set; }
         protected int From { get; private set; }
+        protected int To { get; private set; }
 
         public Slider()
         {
