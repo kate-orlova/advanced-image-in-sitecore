@@ -6,6 +6,11 @@ namespace AdvancedImage.Fields
 {
     public class Slider : Input, IContentField
     {
+        public Slider()
+        {
+            Class = "scContentControl";
+            Activation = true;
+        }
         public string GetValue()
         {
             return Value;
