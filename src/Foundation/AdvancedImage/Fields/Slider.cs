@@ -48,6 +48,24 @@ namespace AdvancedImage.Fields
         public override void HandleMessage(Message message)
         {
             Assert.ArgumentNotNull(message, "message");
+            if (message["id"] == ID)
+            {
+                string name = message.Name;
+                string str = name;
+                if (name != null)
+                {
+                    if (str == "contentslider:move")
+                    {
+                        Value = message["value"];
+                        Sitecore.Context.ClientPage.Modified = true;
+                    }
+                    else if (str == "contentslider:reset")
+                    {
+                        Value = message["value"];
+                        Sitecore.Context.ClientPage.Dispatch("contenteditor:save");
+                    }
+                }
+            }
             base.HandleMessage(message);
         }
     }
