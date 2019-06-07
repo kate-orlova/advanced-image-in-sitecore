@@ -99,5 +99,21 @@ namespace AdvancedImage.Fields
                 IsDebug = MainUtil.GetBool(parameters.Parameters[IS_DEBUG_FIELD_NAME], false);
             }
         }
+        protected override void Render(HtmlTextWriter output)
+        {
+            ParseParameters(this.Source);
+
+            var appDomain = AppDomain.CurrentDomain;
+            var basePath = appDomain.BaseDirectory;
+            var path = Path.Combine(basePath, ASSETS_FOLDER_NAME, "template.html");
+            var html = System.IO.File.ReadAllText(path)
+                .Replace("{CONTROL_ID}", ID)
+                .Replace("{FROM}", From.ToString())
+                .Replace("{TO}", To.ToString())
+                .Replace("{VALUE}", Value)
+                .Replace("{IS_DEBUG}", IsDebug.ToString().ToLower());
+
+            output.Write(html);
+        }
     }
 }
