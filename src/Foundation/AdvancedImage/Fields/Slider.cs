@@ -1,6 +1,10 @@
 ﻿using System;
+using System.IO;
+using System.Web.UI;
+using Sitecore;
 using Sitecore.Diagnostics;
 using Sitecore.Shell.Applications.ContentEditor;
+using Sitecore.Text;
 using Sitecore.Web.UI.HtmlControls;
 using Sitecore.Web.UI.Sheer;
 
@@ -67,6 +71,20 @@ namespace AdvancedImage.Fields
                 }
             }
             base.HandleMessage(message);
+        }
+
+        private void ParseParameters(string source)
+        {
+            var parameters = new UrlString(source);
+
+            if (!string.IsNullOrEmpty(parameters.Parameters[FROM_FIELD_NAME]))
+            {
+                From = MainUtil.GetInt(parameters.Parameters[FROM_FIELD_NAME], 0);
+            }
+            else
+            {
+                From = 1;
+            }
         }
     }
 }
