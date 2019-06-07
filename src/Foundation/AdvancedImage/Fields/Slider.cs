@@ -85,6 +85,15 @@ namespace AdvancedImage.Fields
             {
                 From = 1;
             }
+
+            if (!string.IsNullOrEmpty(parameters.Parameters[TO_FIELD_NAME]))
+            {
+                To = MainUtil.GetInt(parameters.Parameters[TO_FIELD_NAME], 100);
+            }
+            else
+            {
+                To = 100;
+            }
         }
     }
 }
