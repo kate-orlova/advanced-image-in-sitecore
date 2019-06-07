@@ -93,6 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RazorGeneratorMvcStart.cs" />
+    <Compile Include="Fields\AdvancedImage.cs" />
     <Compile Include="Fields\Editor\AdvancedImageEditorDetailsModel.cs" />
     <Compile Include="Fields\Editor\AdvancedImageEditorItem.cs" />
     <Compile Include="Fields\Editor\AdvancedImageEditorModel.cs" />
