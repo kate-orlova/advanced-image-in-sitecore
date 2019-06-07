@@ -72,7 +72,6 @@ namespace AdvancedImage.Fields
             }
             base.HandleMessage(message);
         }
-
         private void ParseParameters(string source)
         {
             var parameters = new UrlString(source);
@@ -93,6 +92,11 @@ namespace AdvancedImage.Fields
             else
             {
                 To = 100;
+            }
+            // TO SHOW RAW VALUES
+            if (!string.IsNullOrEmpty(parameters.Parameters[IS_DEBUG_FIELD_NAME]))
+            {
+                IsDebug = MainUtil.GetBool(parameters.Parameters[IS_DEBUG_FIELD_NAME], false);
             }
         }
     }
