@@ -41,7 +41,13 @@ namespace AdvancedImage.Fields
         protected string ThumbnailsFolderID { get; private set; }
         protected string ImageSourceFolderID { get; private set; }
         protected string IsDebug { get; private set; }
-
+        public AdvancedImage()
+        {
+            Visible = false;
+            Class = "scContentControlImage";
+            Change = "#";
+            Activation = true;
+        }
         public override string GetValue()
         {
             throw new System.NotImplementedException();
