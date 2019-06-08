@@ -39,6 +39,8 @@ namespace AdvancedImage.Fields
             }
         }
         protected string ThumbnailsFolderID { get; private set; }
+        protected string ImageSourceFolderID { get; private set; }
+
         public override string GetValue()
         {
             throw new System.NotImplementedException();
