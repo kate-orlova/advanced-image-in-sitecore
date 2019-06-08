@@ -38,6 +38,7 @@ namespace AdvancedImage.Fields
                 SetViewStateProperty("XmlValue", value, null);
             }
         }
+        protected string ThumbnailsFolderID { get; private set; }
         public override string GetValue()
         {
             throw new System.NotImplementedException();
