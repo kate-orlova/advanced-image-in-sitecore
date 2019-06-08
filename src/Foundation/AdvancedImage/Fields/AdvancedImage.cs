@@ -20,6 +20,24 @@ namespace AdvancedImage.Fields
                 SetViewStateString("Version", value);
             }
         }
+        protected XmlValue XmlValue
+        {
+            get
+            {
+                XmlValue viewStateProperty = this.GetViewStateProperty("XmlValue", null) as XmlValue;
+                if (viewStateProperty == null)
+                {
+                    viewStateProperty = new XmlValue(string.Empty, "image");
+                    XmlValue = viewStateProperty;
+                }
+                return viewStateProperty;
+            }
+            set
+            {
+                Assert.ArgumentNotNull(value, "value");
+                SetViewStateProperty("XmlValue", value, null);
+            }
+        }
         public override string GetValue()
         {
             throw new System.NotImplementedException();
