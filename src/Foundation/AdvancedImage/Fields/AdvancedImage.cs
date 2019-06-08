@@ -48,6 +48,14 @@ namespace AdvancedImage.Fields
             Change = "#";
             Activation = true;
         }
+        protected void Browse()
+        {
+            if (Disabled)
+            {
+                return;
+            }
+            Sitecore.Context.ClientPage.Start(this, "BrowseImage");
+        }
         public override string GetValue()
         {
             throw new System.NotImplementedException();
