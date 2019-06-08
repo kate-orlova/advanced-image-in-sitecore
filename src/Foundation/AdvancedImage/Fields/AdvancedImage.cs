@@ -58,7 +58,7 @@ namespace AdvancedImage.Fields
         }
         public override string GetValue()
         {
-            throw new System.NotImplementedException();
+            return XmlValue.ToString();
         }
 
         public override void SetValue(string value)
