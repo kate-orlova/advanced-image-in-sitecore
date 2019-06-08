@@ -1,4 +1,7 @@
-﻿using Sitecore.Diagnostics;
+﻿using Sitecore;
+using Sitecore.Data.Items;
+using Sitecore.Diagnostics;
+using Sitecore.Globalization;
 using Sitecore.Shell.Applications.ContentEditor;
 
 namespace AdvancedImage.Fields
@@ -64,6 +67,17 @@ namespace AdvancedImage.Fields
         public override void SetValue(string value)
         {
             throw new System.NotImplementedException();
+        }
+
+        private Item GetMediaItem()
+        {
+            string attribute = this.XmlValue.GetAttribute("mediaid");
+            if (attribute.Length <= 0)
+            {
+                return null;
+            }
+            Language language = Language.Parse(this.ItemLanguage);
+            return Client.ContentDatabase.GetItem(attribute, language);
         }
     }
 }
