@@ -166,5 +166,8 @@ namespace AdvancedImage.Fields
                 args.WaitForPostBack();
             }
         }
+        protected void Update(bool showCropper = true)
+        {
+        }
     }
 }
