@@ -3,11 +3,13 @@ using Sitecore;
 using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
 using Sitecore.Globalization;
+using Sitecore.IO;
 using Sitecore.Shell;
 using Sitecore.Shell.Applications.ContentEditor;
 using Sitecore.Text;
 using Sitecore.Web;
 using Sitecore.Web.UI.Sheer;
+using Sitecore.Web.UI.XamlSharp;
 
 namespace AdvancedImage.Fields
 {
@@ -132,6 +134,29 @@ namespace AdvancedImage.Fields
             ClientPage clientPage = Sitecore.Context.ClientPage;
             string[] name = { "item:load(id=", attribute, ",language=", language.Name, ")" };
             clientPage.SendMessage(this, string.Concat(name));
+        }
+        protected void ShowProperties(ClientPipelineArgs args)
+        {
+            Assert.ArgumentNotNull(args, "args");
+            string attribute = this.XmlValue.GetAttribute("mediaid");
+           
+            if (!args.IsPostBack)
+            {
+                string str = FileUtil.MakePath("/sitecore/shell", ControlManager.GetControlUrl(new ControlName("Sitecore.Shell.Applications.Media.ImageProperties")));
+                UrlString urlString = new UrlString(str);
+                Item item = Client.ContentDatabase.GetItem(attribute, Language.Parse(this.ItemLanguage));
+                if (item == null)
+                {
+                    SheerResponse.Alert("Select an image from the Media Library first.");
+                    return;
+                }
+                item.Uri.AddToUrlString(urlString);
+                UrlHandle urlHandle = new UrlHandle();
+                urlHandle["xmlvalue"] = this.XmlValue.ToString();
+                urlHandle.Add(urlString);
+                SheerResponse.ShowModalDialog(urlString.ToString(), true);
+                args.WaitForPostBack();
+            }
         }
     }
 }
