@@ -70,6 +70,12 @@ namespace AdvancedImage.Fields
             XmlValue = new XmlValue(value, "image");
             Value = this.GetMediaPath();
         }
+        protected void SetValue(MediaItem item)
+        {
+            Assert.ArgumentNotNull(item, "item");
+            XmlValue.SetAttribute("mediaid", item.ID.ToString());
+            Value = this.GetMediaPath();
+        }
 
         private Item GetMediaItem()
         {
