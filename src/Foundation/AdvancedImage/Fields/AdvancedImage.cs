@@ -142,13 +142,17 @@ namespace AdvancedImage.Fields
             {
                 return;
             }
-            string attribute = this.XmlValue.GetAttribute("mediaid");
-           
+            string attribute = XmlValue.GetAttribute("mediaid");
+            if (string.IsNullOrEmpty(attribute))
+            {
+                SheerResponse.Alert("Select an image from the Media Library first.");
+                return;
+            }
             if (!args.IsPostBack)
             {
                 string str = FileUtil.MakePath("/sitecore/shell", ControlManager.GetControlUrl(new ControlName("Sitecore.Shell.Applications.Media.ImageProperties")));
                 UrlString urlString = new UrlString(str);
-                Item item = Client.ContentDatabase.GetItem(attribute, Language.Parse(this.ItemLanguage));
+                Item item = Client.ContentDatabase.GetItem(attribute, Language.Parse(ItemLanguage));
                 if (item == null)
                 {
                     SheerResponse.Alert("Select an image from the Media Library first.");
@@ -156,7 +160,7 @@ namespace AdvancedImage.Fields
                 }
                 item.Uri.AddToUrlString(urlString);
                 UrlHandle urlHandle = new UrlHandle();
-                urlHandle["xmlvalue"] = this.XmlValue.ToString();
+                urlHandle["xmlvalue"] = XmlValue.ToString();
                 urlHandle.Add(urlString);
                 SheerResponse.ShowModalDialog(urlString.ToString(), true);
                 args.WaitForPostBack();
