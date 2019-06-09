@@ -105,7 +105,11 @@ namespace AdvancedImage.Fields
         protected void LoadImage()
         {
             string attribute = this.XmlValue.GetAttribute("mediaid");
-
+            if (string.IsNullOrEmpty(attribute))
+            {
+                SheerResponse.Alert("Select an image from the Media Library first.");
+                return;
+            }
             if (!UserOptions.View.ShowEntireTree)
             {
                 Item item = Client.CoreDatabase.GetItem("/sitecore/content/Applications/Content Editor/Applications/MediaLibraryForm");
