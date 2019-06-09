@@ -120,9 +120,14 @@ namespace AdvancedImage.Fields
                         urlString["la"] = WebUtil.GetQueryString("la", string.Empty);
                         urlString["pa1"] = HttpUtility.UrlEncode(item1.Uri.ToString());
                         SheerResponse.SetLocation(urlString.ToString());
+                        return;
                     }
                 }
             }
+            Language language = Language.Parse(this.ItemLanguage);
+            ClientPage clientPage = Sitecore.Context.ClientPage;
+            string[] name = { "item:load(id=", attribute, ",language=", language.Name, ")" };
+            clientPage.SendMessage(this, string.Concat(name));
         }
     }
 }
