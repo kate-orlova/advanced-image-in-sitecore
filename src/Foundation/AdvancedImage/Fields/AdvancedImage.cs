@@ -138,6 +138,10 @@ namespace AdvancedImage.Fields
         protected void ShowProperties(ClientPipelineArgs args)
         {
             Assert.ArgumentNotNull(args, "args");
+            if (Disabled)
+            {
+                return;
+            }
             string attribute = this.XmlValue.GetAttribute("mediaid");
            
             if (!args.IsPostBack)
