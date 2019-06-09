@@ -1,8 +1,13 @@
-﻿using Sitecore;
+﻿using System.Web;
+using Sitecore;
 using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
 using Sitecore.Globalization;
+using Sitecore.Shell;
 using Sitecore.Shell.Applications.ContentEditor;
+using Sitecore.Text;
+using Sitecore.Web;
+using Sitecore.Web.UI.Sheer;
 
 namespace AdvancedImage.Fields
 {
@@ -68,13 +73,13 @@ namespace AdvancedImage.Fields
         {
             Assert.ArgumentNotNull(value, "value");
             XmlValue = new XmlValue(value, "image");
-            Value = this.GetMediaPath();
+            Value = GetMediaPath();
         }
         protected void SetValue(MediaItem item)
         {
             Assert.ArgumentNotNull(item, "item");
             XmlValue.SetAttribute("mediaid", item.ID.ToString());
-            Value = this.GetMediaPath();
+            Value = GetMediaPath();
         }
 
         private Item GetMediaItem()
@@ -96,6 +101,28 @@ namespace AdvancedImage.Fields
                 return string.Empty;
             }
             return mediaItem.MediaPath;
+        }
+        protected void LoadImage()
+        {
+            string attribute = this.XmlValue.GetAttribute("mediaid");
+
+            if (!UserOptions.View.ShowEntireTree)
+            {
+                Item item = Client.CoreDatabase.GetItem("/sitecore/content/Applications/Content Editor/Applications/MediaLibraryForm");
+                if (item != null)
+                {
+                    Item item1 = Client.ContentDatabase.GetItem(attribute);
+                    if (item1 != null)
+                    {
+                        UrlString urlString = new UrlString(item["Source"]);
+                        urlString["pa"] = "1";
+                        urlString["pa0"] = WebUtil.GetQueryString("pa0", string.Empty);
+                        urlString["la"] = WebUtil.GetQueryString("la", string.Empty);
+                        urlString["pa1"] = HttpUtility.UrlEncode(item1.Uri.ToString());
+                        SheerResponse.SetLocation(urlString.ToString());
+                    }
+                }
+            }
         }
     }
 }
