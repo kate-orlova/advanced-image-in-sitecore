@@ -255,5 +255,19 @@ namespace AdvancedImage.Fields
 
             return null;
         }
+        private void ClearImage()
+        {
+            if (Disabled)
+            {
+                return;
+            }
+            if (Value.Length > 0)
+            {
+                SetModified();
+            }
+            XmlValue = new XmlValue(string.Empty, "image");
+            Value = string.Empty;
+            Update();
+        }
     }
 }
