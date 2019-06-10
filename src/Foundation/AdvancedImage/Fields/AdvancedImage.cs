@@ -165,6 +165,13 @@ namespace AdvancedImage.Fields
                 SheerResponse.ShowModalDialog(urlString.ToString(), true);
                 args.WaitForPostBack();
             }
+            else if (args.HasResult)
+            {
+                XmlValue = new XmlValue(args.Result, "image");
+                Value = this.GetMediaPath();
+                SetModified();
+                Update();
+            }
         }
         protected void Update(bool showCropper = true)
         {
