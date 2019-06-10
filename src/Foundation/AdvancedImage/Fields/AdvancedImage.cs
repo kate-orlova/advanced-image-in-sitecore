@@ -1,9 +1,11 @@
-﻿using System.Web;
+﻿using System;
+using System.Web;
 using Sitecore;
 using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
 using Sitecore.Globalization;
 using Sitecore.IO;
+using Sitecore.Resources.Media;
 using Sitecore.Shell;
 using Sitecore.Shell.Applications.ContentEditor;
 using Sitecore.Text;
@@ -175,6 +177,26 @@ namespace AdvancedImage.Fields
         }
         protected void Update(bool showCropper = true)
         {
+
+        }
+        private void GetSrc(out string src)
+        {
+            int num;
+            src = string.Empty;
+            MediaItem mediaItem = this.GetMediaItem();
+            if (mediaItem == null)
+            {
+                return;
+            }
+            MediaUrlOptions thumbnailOptions = MediaUrlOptions.GetThumbnailOptions(mediaItem);
+            if (!int.TryParse(mediaItem.InnerItem["Height"], out num))
+            {
+                num = 128;
+            }
+            thumbnailOptions.Height = Math.Min(128, num);
+            thumbnailOptions.MaxWidth = 640;
+            thumbnailOptions.UseDefaultIcon = true;
+            src = MediaManager.GetMediaUrl(mediaItem, thumbnailOptions);
         }
     }
 }
