@@ -21,6 +21,7 @@ namespace AdvancedImage.Fields
         private const string THUMBNAIL_FOLDER_FIELD_NAME = "ThumbnailsFolderID";
         private const string IMAGES_SOURCE_FOLDER_FIELD_NAME = "ImagesSourceFolderID";
         private const string IS_DEBUG_FIELD_NAME = "IsDebug";
+        private const string ASSETS_FOLDER_ID = "xxx-yyyy-zzzz";
         public string ItemVersion
         {
             get
@@ -54,6 +55,7 @@ namespace AdvancedImage.Fields
         protected string ThumbnailsFolderID { get; private set; }
         protected string ImageSourceFolderID { get; private set; }
         protected string IsDebug { get; private set; }
+        protected string ImagesSourceFolderID { get; private set; }
         public AdvancedImage()
         {
             Visible = false;
@@ -207,6 +209,27 @@ namespace AdvancedImage.Fields
                 MediaItem = mediaItem,
                 XmlValue = this.XmlValue
             };
+        }
+        private void ParseParameters(string source)
+        {
+            var parameters = new UrlString(source);
+
+            // SET THUMBNAIL FOLDER ID BY DEFAULT FROM CONSTANTS OR TAKE IT FROM FIELD SOURCE IF DEFINED SO
+            ThumbnailsFolderID = Sitecore.Data.ID.IsID(ASSETS_FOLDER_ID) ? ASSETS_FOLDER_ID : string.Empty;
+
+            ThumbnailsFolderID = Sitecore.Data.ID.IsID(parameters.Parameters[THUMBNAIL_FOLDER_FIELD_NAME])
+                ? parameters.Parameters[THUMBNAIL_FOLDER_FIELD_NAME]
+                : this.ThumbnailsFolderID;
+
+            ImagesSourceFolderID = Sitecore.Data.ID.IsID(parameters.Parameters[IMAGES_SOURCE_FOLDER_FIELD_NAME])
+                ? parameters.Parameters[IMAGES_SOURCE_FOLDER_FIELD_NAME]
+                : null;
+
+            // WHETHER TO SHOW RAW VALUES
+            if (!string.IsNullOrEmpty(parameters.Parameters[IS_DEBUG_FIELD_NAME]))
+            {
+                IsDebug = parameters.Parameters[IS_DEBUG_FIELD_NAME];
+            }
         }
     }
 }
