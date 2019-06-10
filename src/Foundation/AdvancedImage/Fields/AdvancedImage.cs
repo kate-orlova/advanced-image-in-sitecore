@@ -2,6 +2,7 @@
 using System.Web;
 using AdvancedImage.Fields.Editor;
 using Sitecore;
+using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
 using Sitecore.Globalization;
@@ -230,6 +231,29 @@ namespace AdvancedImage.Fields
             {
                 IsDebug = parameters.Parameters[IS_DEBUG_FIELD_NAME];
             }
+        }
+        private AdvancedImageEditorThumbnailsModel GetThumbnails()
+        {
+            var src = string.Empty;
+
+            GetSrc(out src);
+            ParseParameters(Source);
+
+            if (!string.IsNullOrEmpty(ThumbnailsFolderID) && !string.IsNullOrEmpty(src))
+            {
+                var thumbnailFolderItem = Client.ContentDatabase.GetItem(new ID(ThumbnailsFolderID));
+                if (thumbnailFolderItem != null && thumbnailFolderItem.HasChildren)
+                {
+                    return new AdvancedImageEditorThumbnailsModel
+                    {
+                        ControlId = ID,
+                        Thumbnails = thumbnailFolderItem.Children,
+                        ImageSrc = src
+                    };
+                }
+            }
+
+            return null;
         }
     }
 }
