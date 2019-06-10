@@ -269,5 +269,22 @@ namespace AdvancedImage.Fields
             Value = string.Empty;
             Update();
         }
+        private bool IsImageMedia(TemplateItem template)
+        {
+            Assert.ArgumentNotNull(template, "template");
+            if (template.ID == TemplateIDs.VersionedImage || template.ID == TemplateIDs.UnversionedImage)
+            {
+                return true;
+            }
+            TemplateItem[] baseTemplates = template.BaseTemplates;
+            for (int i = 0; i < baseTemplates.Length; i++)
+            {
+                if (IsImageMedia(baseTemplates[i]))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }
