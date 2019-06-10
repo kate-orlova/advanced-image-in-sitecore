@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web;
+using AdvancedImage.Fields.Editor;
 using Sitecore;
 using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
@@ -197,6 +198,15 @@ namespace AdvancedImage.Fields
             thumbnailOptions.MaxWidth = 640;
             thumbnailOptions.UseDefaultIcon = true;
             src = MediaManager.GetMediaUrl(mediaItem, thumbnailOptions);
+        }
+        private AdvancedImageEditorDetailsModel GetDetails()
+        {
+            MediaItem mediaItem = this.GetMediaItem();
+            return new AdvancedImageEditorDetailsModel
+            {
+                MediaItem = mediaItem,
+                XmlValue = this.XmlValue
+            };
         }
     }
 }
