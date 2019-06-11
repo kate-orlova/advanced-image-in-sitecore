@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web;
+using AdvancedImage.Extensions;
 using AdvancedImage.Fields.Editor;
 using Sitecore;
 using Sitecore.Data;
@@ -181,7 +182,20 @@ namespace AdvancedImage.Fields
         }
         protected void Update(bool showCropper = true)
         {
+            string str;
+            GetSrc(out str);
+            SheerResponse.SetAttribute(string.Concat(this.ID, "_image"), "src", str);
+           
 
+            var updateModel = new AdvancedImageEditorUpdateModel
+            {
+                Details = GetDetails(),
+                Thumbnails = GetThumbnails()
+            };
+            var updateView = HtmlHelperExtensions.GetRazorViewAsString("~/Views/Shared/Fields/AdvancedImageUpdate.cshtml", updateModel);
+
+            SheerResponse.SetInnerHtml(string.Concat(ID, "_details"), updateView);
+            SheerResponse.Eval("scContent.startValidators()");
         }
         private void GetSrc(out string src)
         {
