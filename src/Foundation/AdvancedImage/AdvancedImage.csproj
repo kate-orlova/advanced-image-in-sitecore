@@ -43,6 +43,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Glass.Mapper">
+      <HintPath>..\..\..\packages\Glass.Mapper.Sc.90.Core.5.2.13\lib\net462\Glass.Mapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Glass.Mapper.Sc">
+      <HintPath>..\..\..\packages\Glass.Mapper.Sc.90.Core.5.2.13\lib\net462\Glass.Mapper.Sc.dll</HintPath>
+    </Reference>
     <Reference Include="ImageProcessor">
       <HintPath>..\..\..\packages\ImageProcessor.2.6.2.25\lib\net452\ImageProcessor.dll</HintPath>
     </Reference>
