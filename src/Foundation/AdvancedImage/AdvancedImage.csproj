@@ -110,6 +110,7 @@
     <Compile Include="Fields\Editor\AdvancedImageGalleryEditorModel.cs" />
     <Compile Include="Fields\Slider.cs" />
     <Compile Include="GlassMapper\DataMappers\SitecoreFieldAdvanceImageMapper.cs" />
+    <Compile Include="GlassMapper\Fields\AdvanceImageField.cs" />
     <Compile Include="Processors\CropProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Requests\CropMediaRequest.cs" />
