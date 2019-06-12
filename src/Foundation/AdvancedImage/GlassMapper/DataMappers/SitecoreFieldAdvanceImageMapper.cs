@@ -1,19 +1,46 @@
-﻿using Glass.Mapper.Sc;
+﻿using System.Xml;
+using AdvancedImage.GlassMapper.Fields;
+using AdvancedImage.Helpers;
+using Glass.Mapper.Sc;
 using Glass.Mapper.Sc.Configuration;
 using Glass.Mapper.Sc.DataMappers;
+using Sitecore.Data.Fields;
+using Sitecore.Mvc.Extensions;
 
 namespace AdvancedImage.GlassMapper.DataMappers
 {
     public class SitecoreFieldAdvanceImageMapper : AbstractSitecoreFieldMapper
     {
-        public override string SetFieldValue(object value, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
+        public SitecoreFieldAdvanceImageMapper() : base(typeof(AdvanceImageField))
+        {
+        }
+
+        public override string SetFieldValue(object value, SitecoreFieldConfiguration config,
+            SitecoreDataMappingContext context)
         {
             throw new System.NotImplementedException();
         }
 
-        public override object GetFieldValue(string fieldValue, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
+        public override object GetFieldValue(string fieldValue, SitecoreFieldConfiguration config,
+            SitecoreDataMappingContext context)
         {
             throw new System.NotImplementedException();
+        }
+        public override object GetField(Field field, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
+        {
+            var sitecoreImage = new ImageField(field);
+            var defaultImage = new AdvanceImageField();
+
+            if (sitecoreImage.Value.IsEmptyOrNull())
+            {
+                return defaultImage;
+            }
+
+            var xml = new XmlDocument();
+            xml.LoadXml(sitecoreImage.Value);
+
+            var resultImage = AdvancedImageHelper.ConvertMediaItemToField(xml.DocumentElement, field.Database);
+            return resultImage ?? defaultImage;
         }
     }
 }
