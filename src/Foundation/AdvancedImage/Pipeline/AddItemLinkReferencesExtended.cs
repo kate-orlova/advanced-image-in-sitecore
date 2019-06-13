@@ -7,10 +7,12 @@ using System.Linq;
 using System.Xml;
 using Sitecore;
 using Sitecore.Data;
+using Sitecore.Data.Comparers;
 using Sitecore.Data.Fields;
 using Sitecore.Data.Managers;
 using Sitecore.Diagnostics;
 using Sitecore.Globalization;
+using Sitecore.Publishing.Pipelines.Publish;
 
 namespace AdvancedImage.Pipeline
 {
@@ -22,10 +24,43 @@ namespace AdvancedImage.Pipeline
         {
             DeepScan = true;
         }
+
         protected override List<Item> GetItemReferences(PublishItemContext context)
         {
             throw new NotImplementedException();
         }
+
+        private IEnumerable<Item> GetReferences(Item item, bool sharedOnly, HashSet<ID> processedItems)
+        {
+            Assert.ArgumentNotNull(item, nameof(item));
+            processedItems.Add(item.ID);
+            var source = new List<Item>();
+            var array = item.Links.GetValidLinks().Where(link =>
+                item.Database.Name.Equals(link.TargetDatabaseName, StringComparison.OrdinalIgnoreCase)).ToArray();
+            if (sharedOnly)
+                array = array.Where(link =>
+                {
+                    var sourceItem = link.GetSourceItem();
+                    if (sourceItem == null)
+                        return false;
+                    if (!ID.IsNullOrEmpty(link.SourceFieldID))
+                        return sourceItem.Fields[link.SourceFieldID].Shared;
+                    return true;
+                }).ToArray();
+            foreach (var obj in array.Select(link => link.GetTargetItem()).Where(relatedItem => relatedItem != null)
+                .ToList())
+            {
+                if (DeepScan && !processedItems.Contains(obj.ID))
+                    source.AddRange(GetReferences(obj, sharedOnly, processedItems));
+                source.AddRange(PublishQueue.GetParents(obj));
+                source.Add(obj);
+                source.AddRange(GetAdvanceImageFieldsLinkedMediaItems(obj));
+                source.AddRange(GetAdvanceImageGalleryFieldsLinkedMediaItems(obj));
+            }
+
+            return source.Distinct(new ItemIdComparer());
+        }
+
         protected virtual List<Item> GetAdvanceImageFieldsLinkedMediaItems(Item item)
         {
             var mediaList = new List<Item>();
@@ -43,12 +78,14 @@ namespace AdvancedImage.Pipeline
                 }
                 catch (Exception ex)
                 {
-                    Log.Error("Error publishing advance image related media items", ex, typeof(AddItemLinkReferencesExtended));
+                    Log.Error("Error publishing advance image related media items", ex,
+                        typeof(AddItemLinkReferencesExtended));
                 }
             }
 
             return mediaList;
         }
+
         protected virtual List<Item> GetAdvanceImageGalleryFieldsLinkedMediaItems(Item item)
         {
             var mediaList = new List<Item>();
@@ -82,18 +119,21 @@ namespace AdvancedImage.Pipeline
                         if (string.IsNullOrWhiteSpace(mediaItemIdAttribute?.Value))
                             continue;
 
-                        var target = ItemManager.GetItem(new ID(mediaItemIdAttribute.Value), Language.Current, Sitecore.Data.Version.Latest, item.Database);
+                        var target = ItemManager.GetItem(new ID(mediaItemIdAttribute.Value), Language.Current,
+                            Sitecore.Data.Version.Latest, item.Database);
                         AddMediaItemAndParentsToPublishList(target, mediaList);
                     }
                 }
                 catch (Exception ex)
                 {
-                    Log.Error("Error publishing advance image gallery related media items", ex, typeof(AddItemLinkReferencesExtended));
+                    Log.Error("Error publishing advance image gallery related media items", ex,
+                        typeof(AddItemLinkReferencesExtended));
                 }
             }
 
             return mediaList;
         }
+
         private void AddMediaItemAndParentsToPublishList(Item target, List<Item> mediaList)
         {
             if (target == null || !target.Paths.IsMediaItem)
@@ -105,6 +145,7 @@ namespace AdvancedImage.Pipeline
                 mediaList.Insert(0, parent);
                 parent = parent.Parent;
             }
+
             mediaList.Add(target);
         }
     }
