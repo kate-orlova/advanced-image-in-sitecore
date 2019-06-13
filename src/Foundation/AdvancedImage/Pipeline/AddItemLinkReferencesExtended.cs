@@ -12,6 +12,7 @@ using Sitecore.Data.Fields;
 using Sitecore.Data.Managers;
 using Sitecore.Diagnostics;
 using Sitecore.Globalization;
+using Sitecore.Publishing;
 using Sitecore.Publishing.Pipelines.Publish;
 
 namespace AdvancedImage.Pipeline
@@ -27,7 +28,28 @@ namespace AdvancedImage.Pipeline
 
         protected override List<Item> GetItemReferences(PublishItemContext context)
         {
-            throw new NotImplementedException();
+            Assert.ArgumentNotNull(context, nameof(context));
+            var objList = new List<Item>();
+            if (context.PublishOptions.Mode != PublishMode.SingleItem)
+                return objList;
+            switch (context.Action)
+            {
+                case PublishAction.PublishSharedFields:
+                    var sourceItem = context.PublishHelper.GetSourceItem(context.ItemId);
+                    if (sourceItem == null)
+                        return objList;
+                    objList.AddRange(this.GetReferences(sourceItem, true, new HashSet<ID>()));
+                    break;
+                case PublishAction.PublishVersion:
+                    var versionToPublish = context.VersionToPublish;
+                    if (versionToPublish == null)
+                        return objList;
+                    objList.AddRange(this.GetReferences(versionToPublish, false, new HashSet<ID>()));
+                    break;
+                default:
+                    return objList;
+            }
+            return objList;
         }
 
         private IEnumerable<Item> GetReferences(Item item, bool sharedOnly, HashSet<ID> processedItems)
