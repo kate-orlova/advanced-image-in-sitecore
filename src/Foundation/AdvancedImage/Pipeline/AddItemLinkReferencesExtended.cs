@@ -7,6 +7,7 @@ using System.Linq;
 using System.Xml;
 using Sitecore;
 using Sitecore.Data;
+using Sitecore.Data.Fields;
 using Sitecore.Data.Managers;
 using Sitecore.Diagnostics;
 using Sitecore.Globalization;
@@ -24,6 +25,29 @@ namespace AdvancedImage.Pipeline
         protected override List<Item> GetItemReferences(PublishItemContext context)
         {
             throw new NotImplementedException();
+        }
+        protected virtual List<Item> GetAdvanceImageFieldsLinkedMediaItems(Item item)
+        {
+            var mediaList = new List<Item>();
+
+            var advanceImageFields = item.Fields
+                .Where(x => string.Equals(x.TypeKey, "advance image", StringComparison.OrdinalIgnoreCase))
+                .Select(x => new ImageField(x));
+
+            foreach (var advanceImageField in advanceImageFields)
+            {
+                try
+                {
+                    var target = advanceImageField.MediaItem;
+                    AddMediaItemAndParentsToPublishList(target, mediaList);
+                }
+                catch (Exception ex)
+                {
+                    Log.Error("Error publishing advance image related media items", ex, typeof(AddItemLinkReferencesExtended));
+                }
+            }
+
+            return mediaList;
         }
         protected virtual List<Item> GetAdvanceImageGalleryFieldsLinkedMediaItems(Item item)
         {
