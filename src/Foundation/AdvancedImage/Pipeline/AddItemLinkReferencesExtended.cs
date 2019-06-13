@@ -8,6 +8,8 @@ namespace AdvancedImage.Pipeline
 {
     public class AddItemLinkReferencesExtended : GetItemReferencesProcessor
     {
+        public bool DeepScan { get; set; }
+
         protected override List<Item> GetItemReferences(PublishItemContext context)
         {
             throw new NotImplementedException();
