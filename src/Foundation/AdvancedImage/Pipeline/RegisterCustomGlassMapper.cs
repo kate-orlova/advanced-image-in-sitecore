@@ -1,4 +1,5 @@
-﻿using AdvancedImage.GlassMapper.Models;
+﻿using AdvancedImage.GlassMapper.DataMappers;
+using AdvancedImage.GlassMapper.Models;
 using Glass.Mapper.Sc.IoC;
 
 namespace AdvancedImage.Pipeline
@@ -7,7 +8,8 @@ namespace AdvancedImage.Pipeline
     {
         public override void RegisterFluently(IDependencyResolver glassDependencyResolver)
         {
-            throw new System.NotImplementedException();
+            glassDependencyResolver.DataMapperFactory.Insert(0, () => new SitecoreFieldAdvanceImageMapper());
+            glassDependencyResolver.DataMapperFactory.Insert(0, () => new SitecoreFieldAdvanceImageGalleryMapper());
         }
     }
 }
