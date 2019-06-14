@@ -116,6 +116,7 @@
     <Compile Include="GlassMapper\DataMappers\SitecoreFieldAdvanceImageMapper.cs" />
     <Compile Include="GlassMapper\Fields\AdvanceImageField.cs" />
     <Compile Include="GlassMapper\Fields\AdvanceImageGalleryField.cs" />
+    <Compile Include="GlassMapper\Models\BaseGlassMapperFluentRegistration.cs" />
     <Compile Include="Helpers\AdvancedImageHelper.cs" />
     <Compile Include="Pipeline\AddItemLinkReferencesExtended.cs" />
     <Compile Include="Processors\CropProcessor.cs" />
