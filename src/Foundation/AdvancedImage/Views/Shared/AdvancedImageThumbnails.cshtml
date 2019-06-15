@@ -1,1 +1,21 @@
-﻿
+﻿@model AdvancedImage.Fields.Editor.AdvancedImageEditorThumbnailsModel
+
+@functions
+{
+    string ShowImageSrc()
+    {
+        return !string.IsNullOrEmpty(Model.ImageSrc) ? $"src=\"{Model.ImageSrc}\"" : string.Empty;
+    }
+}
+@if (Model != null)
+{
+    <ul id="@(Model.ControlId)_frame" class="focal-frames">
+        @foreach (var thumbnail in Model.Thumbnails)
+        {
+            <li class="focuspoint focal-frame" style="width: @(thumbnail["Width"])px; height: @(thumbnail["Height"])px;" data-ai-preview-item>
+                <img @ShowImageSrc() data-ai-preview-image />
+                <span>@(thumbnail["Title"])</span>
+            </li>
+        }
+    </ul>
+}
