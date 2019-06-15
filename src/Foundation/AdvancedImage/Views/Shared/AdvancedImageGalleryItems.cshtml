@@ -1,0 +1,50 @@
+﻿@using System.Collections.Generic
+@using AdvancedImage.Extensions
+@model IEnumerable<AdvancedImage.Fields.Editor.AdvancedImageEditorItem>
+    @foreach (var image in Model)
+    {
+        <div class="gallery-item" id="@(image.ControlId)_image_@(image.ImageId)" data-ai-item data-ai-item-id="@image.ImageId">
+            <div class="gallery-item-controls">
+                <button class="gallery-control-left"
+                        type="button"
+                        name="btnGiMoveLeft"
+                        data-ai-btn-left>
+                    <img src="@Html.GetSitecoreIconUrl("Office/16x16/navigate_left.png")" alt="Move the image left">
+                </button>
+                <button class="gallery-control-right"
+                        type="button"
+                        name="btnGiMoveRight"
+                        data-gallery-action="move-right"
+                        data-item-id="@(image.ImageId)"
+                        data-ai-btn-right>
+                    <img src="@Html.GetSitecoreIconUrl("Office/16x16/navigate_right.png")" alt="Move the image right">
+                </button>
+                <button class="gallery-control-close"
+                        type="button"
+                        name="btnGiRemove"
+                        data-gallery-action="remove"
+                        data-item-id="@(image.ImageId)"
+                        data-ai-btn-remove>
+                    <img src="@Html.GetSitecoreIconUrl("Office/16x16/delete.png")" alt="Remove image">
+                </button>
+            </div>
+
+            <div class="gallery-item-image-wrap" data-ai-image-wrap>
+                <img class="gallery-item-image" src="@image.ImageSrc" alt="@image.ImageAlt" data-item-id="@image.ImageId" data-ai-image>
+                <img class="reticle" src="/sitecore modules/advanceimagegallery/img/target-selector.png" style="display: none;" data-ai-focus-image>
+            </div>
+
+            <div>
+                <input class="gallery-control-show-full"
+                       type="checkbox"
+                       value="true" @Html.RenderChecked(image.ShowFull)
+                       id="@(image.ControlId)_chkShowFull_@(image.ImageId)"
+                       data-ai-show-full
+                       data-role="switch-show-full-image"
+                       data-item-id="@(image.ImageId)" />
+                <label for="@(image.ControlId)_chkShowFull_@(image.ImageId)">Show full image</label>
+            </div>
+
+            <input id="@(image.ControlId)_crop_@(image.ImageId)" data-role="crop-params" type="hidden" value="@(image.CropFocus)" data-ai-crop>
+        </div>
+    }
