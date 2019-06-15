@@ -1,0 +1,35 @@
+﻿@model AdvancedImage.Fields.Editor.AdvancedImageEditorDetailsModel
+
+@functions
+{
+
+    string GetDimensions()
+    {
+        if (!string.IsNullOrEmpty(Model.ImageWidth) || !string.IsNullOrEmpty(Model.ImageHeight))
+        {
+            return $"Dimensions: {Model.ImageWidth} x {Model.ImageHeight} (Original: {Model.OriginalDimensions})";
+        }
+        else
+        {
+            return $"Dimensions: {Model.OriginalDimensions}";
+        }
+    }
+
+    string GetAlternateText()
+    {
+        if (!string.IsNullOrEmpty(Model.UpdatedAlternateText) && !string.IsNullOrEmpty(Model.OriginalAlternateText))
+        {
+            return $"Alternate Text: \"{Model.UpdatedAlternateText}\" (Default Alternate Text: \"{Model.OriginalAlternateText}\")";
+        }
+        if (!string.IsNullOrEmpty(Model.UpdatedAlternateText))
+        {
+
+            return $"Alternate Text: \"{Model.UpdatedAlternateText}\"";
+        }
+        return !string.IsNullOrEmpty(Model.OriginalAlternateText) ?
+            $"Default Alternate Text: \"{Model.OriginalAlternateText}\"" :
+            "Warning: Alternate Text is missing.";
+    }
+}
+<div data-ai-preview-dimensions>@GetDimensions()</div>
+<div style="padding:2px 0 0 0" data-ai-preview-alt>@GetAlternateText()</div>
