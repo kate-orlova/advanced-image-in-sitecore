@@ -40,5 +40,9 @@ namespace AdvancedImage.Extensions
 
             return new HtmlString(string.Empty);
         }
+        public static HtmlString RenderChecked(this HtmlHelper helper, bool value)
+        {
+            return new HtmlString(value ? "checked" : string.Empty);
+        }
     }
 }
