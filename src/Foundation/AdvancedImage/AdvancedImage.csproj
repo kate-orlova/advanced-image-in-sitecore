@@ -100,6 +100,7 @@
     <Content Include="Fields\Slider\template.html" />
     <Content Include="sitecore modules\AdvanceImageGallery\css\focuspoint.css" />
     <Content Include="sitecore modules\AdvanceImageGallery\css\helper-tool.css" />
+    <Content Include="sitecore modules\AdvanceImageGallery\detail.html" />
     <Content Include="sitecore modules\AdvanceImageGallery\img\target-selector.png" />
     <Content Include="sitecore modules\AdvanceImageGallery\js\jquery.focuspoint.js" />
     <Content Include="sitecore modules\AdvanceImageGallery\js\jquery.focuspoint.min.js" />
