@@ -1,1 +1,326 @@
-﻿
+﻿@using System.Linq
+@using System.Web.Mvc.Html
+@model AdvancedImage.Fields.Editor.AdvancedImageGalleryEditorModel
+
+<div id="@(Model.ControlId)_pane" class="scContentControlImagePane" data-ai>
+    <div class="scContentControlImageImage" @*ondblclick="javascript:return scForm.postEvent(this,event,'@(Model.ControlId).Browse');"*@ style="text-align: left;">
+        <div class="gallery-grid helper-tool-target" id="@(Model.ControlId)_gallery" data-ai-items-container>
+            @if (Model?.Images != null && Model.Images.Any())
+            {
+                @Html.Partial("~/Views/Shared/Fields/AdvancedImageGalleryItems.cshtml", Model.Images)
+            }
+        </div>
+    </div>
+    <div class="scContentControlImageDetails" data-ai-preview-container>
+        @if (Model.Details != null)
+        {
+            @Html.Partial("~/Views/Shared/Fields/AdvancedImageDetails.cshtml", Model.Details)
+        }
+
+        @if (Model.Thumbnails != null)
+        {
+            @Html.Partial("~/Views/Shared/Fields/AdvancedImageThumbnails.cshtml", Model.Thumbnails)
+        }
+    </div>
+
+    <link href="/sitecore modules/advanceimagegallery/css/focuspoint.css" rel="stylesheet" />
+    <link href="/sitecore modules/advanceimagegallery/css/helper-tool.css" rel="stylesheet" />
+
+    <script>
+        jQuery(document).ready(function () {
+            (function ($) {
+                const s = document.createElement("script");
+                s.type = "text/javascript";
+                s.src = "/sitecore modules/advanceimagegallery/js/jquery.focuspoint.js";
+                $("head").append(s);
+
+                const $control = $('#@(Model.ControlId)_pane');
+                const $galleryContainer = $control.find('[data-ai-items-container]');
+                const $previewContainer = $control.find('[data-ai-preview-container]');
+                const $previewItems = $previewContainer.find("[data-ai-preview-item]");
+                const $previewImages = $previewContainer.find("[data-ai-preview-image]");
+                const $imageDimensions = $previewContainer.find('[data-ai-preview-dimensions]');
+                const $imageAlt = $previewContainer.find('[data-ai-preview-alt]');
+                const advancedImages = {};
+                let activeImageId = null;
+
+                if ($control) {
+                    // jQuery .bind() does not support custom events
+
+                    $control[0].addEventListener('updateGallery', function (event) {
+                        updateGallery(event.detail.html);
+
+                        if (event.detail && event.detail.imageId) {
+                            setActiveItem(event.detail.imageId);
+                        }
+                    }, false);
+                }
+
+                init();
+
+                function init() {
+                    const $advancedImages = $galleryContainer.find('[data-ai-item]');
+
+                    activeImageId = null;
+
+                    $advancedImages.each(function(i, item) {
+                        const $item = $(item);
+                        const itemId = $item.attr("data-ai-item-id");
+                        const advancedImage = {
+                            id: itemId,
+                            $root: $item,
+                            $imageWrap: $item.find('[data-ai-image-wrap]'),
+                            $image: $item.find('[data-ai-image]'),
+                            $focusImage: $item.find('[data-ai-focus-image]'),
+                            $btnLeft: $item.find('[data-ai-btn-left]'),
+                            $btnRight: $item.find('[data-ai-btn-right]'),
+                            $btnRemove: $item.find('[data-ai-btn-remove]'),
+                            $showFull: $item.find('[data-ai-show-full]'),
+                            $cropInput: $item.find('[data-ai-crop]'),
+                        };
+
+                        advancedImage.cropParams = parseCropParams(advancedImage.$cropInput.val());
+                        advancedImage.$imageWrap.click({ id: itemId }, onImageWrapClick);
+                        advancedImage.$showFull.change({ id: itemId }, onShowFullChange);
+                        advancedImage.$btnLeft.click({ id: itemId }, onClickButtonLeft);
+                        advancedImage.$btnRight.click({ id: itemId }, onClickButtonRight);
+                        advancedImage.$btnRemove.click({ id: itemId }, onClickButtonRemove);
+                        advancedImages[itemId] = advancedImage;
+
+                        displayFocalPoint(advancedImage);
+                    });
+                }
+
+                function submitCropParams(item) {
+                    window.scForm.postEvent(this, event,
+                        "advancedimagegallery:crop(id=@(Model.ControlId),imgId=" + item.id +
+                        ",cx=" + item.cropParams.cx +
+                        ",cy=" + item.cropParams.cy +
+                        ",fx=" + item.cropParams.fx +
+                        ",fy=" + item.cropParams.fy +
+                        ",sf=" + item.cropParams.sf + ")"
+                    );
+                }
+
+                function onShowFullChange(e) {
+                    const $thisCheckbox = $(this);
+                    const item = advancedImages[e.data.id];
+
+                    item.cropParams.sf = $thisCheckbox.is(":checked");
+
+                    setActiveItem(e.data.id)
+                    submitCropParams(item);
+                }
+
+                function onClickButtonLeft(e) {
+                    window.scForm.postEvent(this, event,
+                        "advancedimagegallery:moveLeft(id=@(Model.ControlId),imgId=" + e.data.id + ")");
+                }
+
+                function onClickButtonRight(e) {
+                    window.scForm.postEvent(this, event,
+                        "advancedimagegallery:moveRight(id=@(Model.ControlId),imgId=" + e.data.id + ")");
+                }
+
+                function onClickButtonRemove(e) {
+                    window.scForm.postEvent(this, event,
+                        "advancedimagegallery:remove(id=@(Model.ControlId),imgId=" + e.data.id + ")");
+                }
+
+                function onImageWrapClick(e) {
+                    if (activeImageId !== e.data.id) {
+                        setActiveItem(e.data.id);
+                        return;
+                    }
+
+                    imageCrop(e.data.id, e.pageX, e.pageY);
+                }
+
+                function CreateFocusPoint(args) {
+                    const focusPoint = { x: 0, y: 0, w: 0, h: 0 };
+
+                    if (args !== undefined && args !== null) {
+                        focusPoint.x = args[0] === undefined ? 0 : args[0];
+                        focusPoint.y = args[1] === undefined ? 0 : args[1];
+                        focusPoint.w = args[2] === undefined ? 0 : args[2];
+                        focusPoint.h = args[3] === undefined ? 0 : args[3];
+                    }
+
+                    return focusPoint;
+                }
+
+                function CreateCropParams(args) {
+                    const cropParams = { cx: 0, cy: 0, fx: 0, fy: 0, sf: false, w: 0, h: 0 };
+
+                    if (args !== undefined && args !== null) {
+                        cropParams.cx = args[0] === undefined ? 0 : args[0];
+                        cropParams.cy = args[1] === undefined ? 0 : args[1];
+                        cropParams.fx = args[2] === undefined ? 0 : args[2];
+                        cropParams.fy = args[3] === undefined ? 0 : args[3];
+                        cropParams.sf = args[4] === undefined ? 0 : args[4];
+                        cropParams.w = args[5] === undefined ? 0 : args[5];
+                        cropParams.h = args[6] === undefined ? 0 : args[6];
+                    }
+
+                    return cropParams;
+                }
+
+                function parseCropParams(params) {
+                    if (params && params.length > 0) {
+                        const arr = params.split(",");
+                        if (arr.length === 5) {
+                            return new CreateCropParams([
+                                arr[0].length === 0 ? 0 : parseFloat(arr[0]),
+                                arr[1].length === 0 ? 0 : parseFloat(arr[1]),
+                                arr[2].length === 0 ? 0 : parseFloat(arr[2]),
+                                arr[3].length === 0 ? 0 : parseFloat(arr[3]),
+                                arr[4].length === 0 ? false : arr[4] === "true"
+                            ]);
+                        }
+                    }
+
+                    return new CreateCropParams();
+                }
+
+                function displayFocalPoint(item) {
+                    const $focusImage = item.$focusImage;
+                    const cropParams = item.cropParams;
+
+                    if (cropParams.cx > 0 && cropParams.cy > 0) {
+                        $focusImage.css({
+                            "left": (cropParams.cx * 100) + "%",
+                            "top": (cropParams.cy * 100) + "%"
+                        });
+                    }
+
+                    $focusImage.show();
+                }
+
+                function setActiveItem(itemId) {
+                    if (activeImageId) {
+                        advancedImages[activeImageId].$root.removeClass('is-active');
+                        activeImageId = null;
+                    }
+
+                    activeImageId = itemId;
+                    advancedImages[activeImageId].$root.addClass('is-active');
+                    renderImagePreviews(itemId);
+                }
+
+                function renderImagePreviews(itemId) {
+                    const item = advancedImages[itemId];
+
+                    if (!item) return;
+
+                    const cropParams = item.cropParams;
+                    const imgUrl = item.$image.attr("src");
+
+                    $imageDimensions.text('Dimensions: ' + item.$image.width() + ' x ' + item.$image.height());
+                    $imageAlt.text('Alternate Text: "' + item.$image.attr("alt") + '"');
+
+                    const focusPoint = new CreateFocusPoint([0, 0, item.$image.width(), item.$image.height()]);
+                    focusPoint.x = cropParams.fx;
+                    focusPoint.y = cropParams.fy;
+
+                    const focusImage = item.$focusImage;
+                    focusImage.show();
+
+                    if (cropParams.cx > 0 && cropParams.cy > 0) {
+                        focusImage.css({
+                            "left": (cropParams.cx * 100) + "%",
+                            "top": (cropParams.cy * 100) + "%"
+                        });
+                    }
+
+                    //Set src on all preview images
+                    $previewImages.attr("src", imgUrl);
+
+                    //Set up initial properties of preview items
+
+                    /*-----------------------------------------*/
+                    // These assignments using .data() are what counts.
+                    /*-----------------------------------------*/
+                    $previewItems.data("focusX", focusPoint.x);
+                    $previewItems.data("focusY", focusPoint.y);
+                    $previewItems.data("imageW", focusPoint.w);
+                    $previewItems.data("imageH", focusPoint.h);
+
+                    //Run FocusPoint for the first time.
+                    $previewItems.focusPoint();
+                    setFullClass(item.cropParams.sf);
+                }
+
+                function imageCrop(itemId, pageX, pageY) {
+                    const item = advancedImages[itemId];
+                    const $thisImage = item.$image;
+                    const imageW = $thisImage.width();
+                    const imageH = $thisImage.height();
+
+                    //Calculate FocusPoint coordinates
+                    const offsetX = pageX - $thisImage.offset().left;
+                    const offsetY = pageY - $thisImage.offset().top;
+                    const cropX = (offsetX / imageW);
+                    const cropY = (offsetY / imageH);
+                    const focusX = (offsetX / imageW - .5) * 2;
+                    const focusY = (offsetY / imageH - .5) * -2;
+
+                    //Update focus point
+                    updateFocusPoint(new CreateFocusPoint([focusX, focusY]));
+
+                    //Calculate CSS Percentages
+                    const percentageX = (offsetX / imageW) * 100;
+                    const percentageY = (offsetY / imageH) * 100;
+
+                    //Leave a sweet target reticle at the focus point.
+
+                    item.$focusImage
+                        .show()
+                        .css({
+                            "top": percentageY + "%",
+                            "left": percentageX + "%"
+                        });
+
+                    item.cropParams = new CreateCropParams([
+                        cropX.toFixed(2),
+                        cropY.toFixed(2),
+                        focusX,
+                        focusY,
+                        item.$showFull.is(":checked"),
+                        item.$image.width(),
+                        item.$image.height()
+                    ]);
+
+                    submitCropParams(item);
+                }
+
+                function updateFocusPoint(focusPoint) {
+                    $previewItems.data("focusX", focusPoint.x);
+                    $previewItems.data("focusY", focusPoint.y);
+                    $previewItems.adjustFocus();
+                }
+
+                function updateGallery(html) {
+                    if ($galleryContainer) {
+                        $galleryContainer.html(decodeHtml(html));
+                    }
+                    init();
+                }
+
+                function decodeHtml(encodedHtml) {
+                    const parser = new DOMParser;
+                    const dom = parser.parseFromString('<!doctype html><body>' + encodedHtml + '</body></html>', 'text/html');
+                    return dom.body.textContent;
+                }
+
+                function setFullClass(shouldFull) {
+                    if (shouldFull) {
+                        $previewItems.addClass('show-full');
+                    } else {
+                        $previewItems.removeClass('show-full');
+                    }
+                }
+            }(jQuery));
+        });
+    </script>
+</div>
+
