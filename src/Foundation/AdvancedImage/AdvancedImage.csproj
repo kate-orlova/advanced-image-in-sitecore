@@ -146,12 +146,12 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
-    <Content Include="Views\Shared\AdvancedImage.cshtml" />
-    <Content Include="Views\Shared\AdvancedImageDetails.cshtml" />
-    <Content Include="Views\Shared\AdvancedImageGallery.cshtml" />
-    <Content Include="Views\Shared\AdvancedImageGalleryItems.cshtml" />
-    <Content Include="Views\Shared\AdvancedImageThumbnails.cshtml" />
-    <Content Include="Views\Shared\AdvancedImageUpdate.cshtml" />
+    <Content Include="Views\Shared\Fields\AdvancedImage.cshtml" />
+    <Content Include="Views\Shared\Fields\AdvancedImageDetails.cshtml" />
+    <Content Include="Views\Shared\Fields\AdvancedImageGallery.cshtml" />
+    <Content Include="Views\Shared\Fields\AdvancedImageGalleryItems.cshtml" />
+    <Content Include="Views\Shared\Fields\AdvancedImageThumbnails.cshtml" />
+    <Content Include="Views\Shared\Fields\AdvancedImageUpdate.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
