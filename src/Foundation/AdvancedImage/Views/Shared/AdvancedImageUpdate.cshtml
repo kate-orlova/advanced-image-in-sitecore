@@ -1,0 +1,5 @@
+﻿@model AdvancedImage.Fields.Editor.AdvancedImageEditorUpdateModel
+
+@Html.Raw(AdvancedImage.Extensions.HtmlHelperExtensions.GetRazorViewAsString("~/Views/Shared/Fields/AdvancedImageDetails.cshtml", Model.Details))
+
+@Html.Raw(AdvancedImage.Extensions.HtmlHelperExtensions.GetRazorViewAsString("~/Views/Shared/Fields/AdvancedImageThumbnails.cshtml", Model.Thumbnails))

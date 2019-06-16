@@ -151,6 +151,7 @@
     <Content Include="Views\Shared\AdvancedImageGallery.cshtml" />
     <Content Include="Views\Shared\AdvancedImageGalleryItems.cshtml" />
     <Content Include="Views\Shared\AdvancedImageThumbnails.cshtml" />
+    <Content Include="Views\Shared\AdvancedImageUpdate.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
