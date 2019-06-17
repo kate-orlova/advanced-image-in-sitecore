@@ -144,6 +144,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Config\Include\Foundation.AdvancedImage.config" />
+    <Content Include="App_Config\Include\Sitecore.Framework.Fields.AdvancedImage.config" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
