@@ -143,6 +143,7 @@
     <Compile Include="Requests\CropMediaRequest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Config\Include\Foundation.AdvancedImage.config" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
