@@ -37,6 +37,13 @@ namespace AdvancedImage.Fields
 
         public override void SetValue(string value)
         {
+            Assert.ArgumentNotNull(value, "value");
+            XmlValue = new XmlValue(value, "gallery");
+            Value = GetMediaPath();
+        }
+
+        private string GetMediaPath()
+        {
             throw new System.NotImplementedException();
         }
     }
