@@ -1,4 +1,5 @@
-﻿using Sitecore.Diagnostics;
+﻿using Sitecore.Data.Items;
+using Sitecore.Diagnostics;
 using Sitecore.Shell.Applications.ContentEditor;
 
 namespace AdvancedImage.Fields
@@ -39,6 +40,13 @@ namespace AdvancedImage.Fields
         {
             Assert.ArgumentNotNull(value, "value");
             XmlValue = new XmlValue(value, "gallery");
+            Value = GetMediaPath();
+        }
+
+        protected void SetValue(MediaItem item)
+        {
+            Assert.ArgumentNotNull(item, "item");
+            XmlValue.SetAttribute("mediaid", item.ID.ToString());
             Value = GetMediaPath();
         }
 
