@@ -33,6 +33,11 @@ namespace AdvancedImage.Fields
                 SetViewStateProperty("XmlValue", value, null);
             }
         }
+        public string LastSelectedItemId
+        {
+            get => StringUtil.GetString(ViewState["LastSelectedItemID"]);
+            set => ViewState["LastSelectedItemID"] = value;
+        }
 
         public override string GetValue()
         {
