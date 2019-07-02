@@ -38,6 +38,7 @@ namespace AdvancedImage.Fields
             get => StringUtil.GetString(ViewState["LastSelectedItemID"]);
             set => ViewState["LastSelectedItemID"] = value;
         }
+        protected string ThumbnailsFolderID { get; private set; }
 
         public override string GetValue()
         {
