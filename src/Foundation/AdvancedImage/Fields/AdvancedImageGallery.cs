@@ -14,6 +14,14 @@ namespace AdvancedImage.Fields
         private const string IS_DEBUG_FIELD_NAME = "IsDebug";
         private const string ASSETS_FOLDER_ID = "xxx-yyyy-zzzz";
 
+        public AdvancedImageGallery()
+        {
+            Visible = false;
+            Class = "scContentControlImage";
+            Change = "#";
+            Activation = true;
+        }
+
         protected XmlValue XmlValue
         {
             get
