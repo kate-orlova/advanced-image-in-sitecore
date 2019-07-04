@@ -1,4 +1,6 @@
-﻿using Sitecore;
+﻿using System.Collections.Generic;
+using System.Xml;
+using Sitecore;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
@@ -70,6 +72,20 @@ namespace AdvancedImage.Fields
         private string GetMediaPath()
         {
             return string.Empty;
+        }
+
+        private IEnumerable<XmlElement> GetXmlImages()
+        {
+            var gallery = XmlValue.Xml.DocumentElement;
+            var galleryImages = new List<XmlElement>();
+            if (gallery == null || !gallery.HasChildNodes)
+                return galleryImages;
+
+            foreach (XmlElement galleryChildNode in gallery.ChildNodes)
+            {
+                galleryImages.Add(galleryChildNode);
+            }
+            return galleryImages;
         }
     }
 }
