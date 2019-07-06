@@ -1,11 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Xml;
+using AdvancedImage.Fields.Editor;
 using Sitecore;
+using Sitecore.Configuration;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
 using Sitecore.Globalization;
 using Sitecore.Shell.Applications.ContentEditor;
+using Sitecore.Text;
 
 namespace AdvancedImage.Fields
 {
@@ -43,11 +46,13 @@ namespace AdvancedImage.Fields
                 SetViewStateProperty("XmlValue", value, null);
             }
         }
+
         public string LastSelectedItemId
         {
             get => StringUtil.GetString(ViewState["LastSelectedItemID"]);
             set => ViewState["LastSelectedItemID"] = value;
         }
+
         protected string ThumbnailsFolderID { get; private set; }
         protected string ImagesSourceFolderID { get; private set; }
         protected string IsDebug { get; private set; }
@@ -76,6 +81,29 @@ namespace AdvancedImage.Fields
             return string.Empty;
         }
 
+        private void ParseParameters(string source)
+        {
+            var parameters = new UrlString(source);
+            var defaultThumbnailFolderId = Settings.GetSetting("DefaultThumbnailFolderId");
+            ThumbnailsFolderID = Sitecore.Data.ID.IsID(defaultThumbnailFolderId)
+                ? defaultThumbnailFolderId
+                : string.Empty;
+
+            ThumbnailsFolderID = Sitecore.Data.ID.IsID(parameters.Parameters[THUMBNAIL_FOLDER_FIELD_NAME])
+                ? parameters.Parameters[THUMBNAIL_FOLDER_FIELD_NAME]
+                : ThumbnailsFolderID;
+
+            ImagesSourceFolderID = Sitecore.Data.ID.IsID(parameters.Parameters[IMAGES_SOURCE_FOLDER_FIELD_NAME])
+                ? parameters.Parameters[IMAGES_SOURCE_FOLDER_FIELD_NAME]
+                : null;
+
+            if (!string.IsNullOrEmpty(parameters.Parameters[IS_DEBUG_FIELD_NAME]))
+            {
+                IsDebug = parameters.Parameters[IS_DEBUG_FIELD_NAME];
+            }
+        }
+
+
         private IEnumerable<XmlElement> GetXmlImages()
         {
             var gallery = XmlValue.Xml.DocumentElement;
@@ -87,6 +115,7 @@ namespace AdvancedImage.Fields
             {
                 galleryImages.Add(galleryChildNode);
             }
+
             return galleryImages;
         }
     }
