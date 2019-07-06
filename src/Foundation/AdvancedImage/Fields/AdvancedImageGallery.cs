@@ -50,6 +50,7 @@ namespace AdvancedImage.Fields
         }
         protected string ThumbnailsFolderID { get; private set; }
         protected string ImagesSourceFolderID { get; private set; }
+        protected string IsDebug { get; private set; }
 
         public override string GetValue()
         {
