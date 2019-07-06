@@ -81,6 +81,25 @@ namespace AdvancedImage.Fields
             return string.Empty;
         }
 
+        private AdvancedImageEditorThumbnailsModel GetThumbnails()
+        {
+            ParseParameters(Source);
+
+            if (!string.IsNullOrEmpty(ThumbnailsFolderID))
+            {
+                var thumbnailFolderItem = Client.ContentDatabase.GetItem(new ID(ThumbnailsFolderID));
+                if (thumbnailFolderItem != null && thumbnailFolderItem.HasChildren)
+                {
+                    return new AdvancedImageEditorThumbnailsModel
+                    {
+                        ControlId = ID,
+                        Thumbnails = thumbnailFolderItem.Children
+                    };
+                }
+            }
+
+            return null;
+        }
         private void ParseParameters(string source)
         {
             var parameters = new UrlString(source);
@@ -102,7 +121,6 @@ namespace AdvancedImage.Fields
                 IsDebug = parameters.Parameters[IS_DEBUG_FIELD_NAME];
             }
         }
-
 
         private IEnumerable<XmlElement> GetXmlImages()
         {
