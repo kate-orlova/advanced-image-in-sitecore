@@ -79,6 +79,17 @@ namespace AdvancedImage.Fields
             Value = GetMediaPath();
         }
 
+        private Item GetMediaItem(string imageId)
+        {
+            if (imageId.Length <= 0)
+            {
+                return null;
+            }
+
+            Language language = Language.Parse(ItemLanguage);
+            return Client.ContentDatabase.GetItem(new ID(imageId), language);
+        }
+
         private string GetMediaPath()
         {
             return string.Empty;
