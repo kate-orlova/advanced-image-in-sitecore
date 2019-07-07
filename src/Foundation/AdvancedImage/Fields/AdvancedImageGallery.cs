@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Xml;
 using AdvancedImage.Fields.Editor;
 using Sitecore;
@@ -81,6 +82,18 @@ namespace AdvancedImage.Fields
             return string.Empty;
         }
 
+        private static bool IsImageMedia(TemplateItem template)
+        {
+            Assert.ArgumentNotNull(template, "template");
+            if (template.ID == TemplateIDs.VersionedImage || template.ID == TemplateIDs.UnversionedImage)
+            {
+                return true;
+            }
+
+            var baseTemplates = template.BaseTemplates;
+            return baseTemplates.Any(IsImageMedia);
+        }
+
         private AdvancedImageEditorThumbnailsModel GetThumbnails()
         {
             ParseParameters(Source);
@@ -100,6 +113,7 @@ namespace AdvancedImage.Fields
 
             return null;
         }
+
         private void ParseParameters(string source)
         {
             var parameters = new UrlString(source);
