@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
 using AdvancedImage.Fields.Editor;
@@ -8,6 +9,7 @@ using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
 using Sitecore.Globalization;
+using Sitecore.Resources.Media;
 using Sitecore.Shell.Applications.ContentEditor;
 using Sitecore.Text;
 
@@ -80,6 +82,31 @@ namespace AdvancedImage.Fields
         private string GetMediaPath()
         {
             return string.Empty;
+        }
+
+        private static void GetMediaItemSrc(MediaItem mediaItem, out string src)
+        {
+            const int minHeight = 128;
+            const int maxWidth = 640;
+
+            src = string.Empty;
+
+            if (mediaItem == null)
+            {
+                return;
+            }
+
+            var thumbnailOptions = MediaUrlOptions.GetThumbnailOptions(mediaItem);
+            if (!int.TryParse(mediaItem.InnerItem["Height"], out var parsedHeight))
+            {
+                parsedHeight = minHeight;
+            }
+
+            thumbnailOptions.Height = Math.Min(minHeight, parsedHeight);
+            thumbnailOptions.MaxWidth = maxWidth;
+            thumbnailOptions.UseDefaultIcon = true;
+
+            src = MediaManager.GetMediaUrl(mediaItem, thumbnailOptions);
         }
 
         private static bool IsImageMedia(TemplateItem template)
