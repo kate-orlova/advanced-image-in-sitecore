@@ -30,6 +30,16 @@ namespace AdvancedImage.Fields
             Activation = true;
         }
 
+        public string ItemVersion
+        {
+            get { return GetViewStateString("Version"); }
+            set
+            {
+                Assert.ArgumentNotNull(value, "value");
+                SetViewStateString("Version", value);
+            }
+        }
+
         protected XmlValue XmlValue
         {
             get
