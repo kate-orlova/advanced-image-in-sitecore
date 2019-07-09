@@ -79,6 +79,14 @@ namespace AdvancedImage.Fields
             Value = GetMediaPath();
         }
 
+        private AdvancedImageEditorDetailsModel GetDetails()
+        {
+            return new AdvancedImageEditorDetailsModel
+            {
+                XmlValue = XmlValue,
+            };
+        }
+
         private Item GetMediaItem(string imageId)
         {
             if (imageId.Length <= 0)
