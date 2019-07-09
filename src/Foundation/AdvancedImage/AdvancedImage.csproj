@@ -122,6 +122,7 @@
     <Compile Include="App_Start\RazorGeneratorMvcStart.cs" />
     <Compile Include="Controllers\FakeController.cs" />
     <Compile Include="Extensions\HtmlHelperExtensions.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Fields\AdvancedImage.cs" />
     <Compile Include="Fields\AdvancedImageGallery.cs" />
     <Compile Include="Fields\Editor\AdvancedImageEditorDetailsModel.cs" />
