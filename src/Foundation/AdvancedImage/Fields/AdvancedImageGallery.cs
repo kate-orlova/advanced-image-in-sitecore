@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 using System.Xml;
+using AdvancedImage.Extensions;
 using AdvancedImage.Fields.Editor;
 using Sitecore;
 using Sitecore.Configuration;
@@ -205,6 +207,37 @@ namespace AdvancedImage.Fields
             }
 
             return galleryImages;
+        }
+
+        private List<AdvancedImageEditorItem> GetImageEditors()
+        {
+            var imageCollection = this.GetXmlImages().ToArray();
+            var imageEditorsList = new List<AdvancedImageEditorItem>();
+            if (imageCollection.Any())
+            {
+                foreach (var image in imageCollection)
+                {
+                    var imageId = image.GetAttribute("mediaid");
+                    var mediaItem = this.GetMediaItem(imageId);
+                    if (mediaItem != null)
+                    {
+                        GetMediaItemSrc(mediaItem, out var src);
+                        var newImageEditor = new AdvancedImageEditorItem
+                        {
+                            ControlId = this.ID,
+                            ImageId = imageId,
+                            ImageAlt = HttpUtility.HtmlEncode(mediaItem["Alt"]),
+                            CropFocus =
+                                $"{image.GetAttribute("cropx")},{image.GetAttribute("cropy")},{image.GetAttribute("focusx")},{image.GetAttribute("focusy")},{image.GetAttribute("showFull")}",
+                            ImageSrc = src,
+                            ShowFull = image.GetAttribute("showFull").ParseOrDefault(false)
+                        };
+                        imageEditorsList.Add(newImageEditor);
+                    }
+                }
+            }
+
+            return imageEditorsList;
         }
     }
 }
