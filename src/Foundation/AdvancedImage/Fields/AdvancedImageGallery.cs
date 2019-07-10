@@ -16,6 +16,7 @@ using Sitecore.Globalization;
 using Sitecore.Resources.Media;
 using Sitecore.Shell.Applications.ContentEditor;
 using Sitecore.Text;
+using Sitecore.Web.UI.Sheer;
 
 namespace AdvancedImage.Fields
 {
@@ -258,6 +259,21 @@ namespace AdvancedImage.Fields
                 HtmlHelperExtensions.GetRazorViewAsString("~/Views/Shared/Fields/AdvancedImageGallery.cshtml",
                     editorModel);
             output.Write(new MvcHtmlString(testViewRender));
+        }
+
+        protected void Update(bool showCropper = true)
+        {
+            var updateModel = new AdvancedImageEditorUpdateModel
+            {
+                Details = this.GetDetails(),
+                Thumbnails = this.GetThumbnails()
+            };
+            var updateView =
+                HtmlHelperExtensions.GetRazorViewAsString("~/Views/Shared/Fields/AdvancedImageUpdate.cshtml",
+                    updateModel);
+
+            SheerResponse.SetInnerHtml(string.Concat(this.ID, "_details"), updateView);
+            SheerResponse.Eval("scContent.startValidators()");
         }
     }
 }
