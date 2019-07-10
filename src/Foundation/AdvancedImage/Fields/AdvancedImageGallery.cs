@@ -275,5 +275,15 @@ namespace AdvancedImage.Fields
             SheerResponse.SetInnerHtml(string.Concat(this.ID, "_details"), updateView);
             SheerResponse.Eval("scContent.startValidators()");
         }
+
+        public void ClearCollection()
+        {
+            if (Disabled)
+            {
+                return;
+            }
+
+            XmlValue = new XmlValue(string.Empty, "gallery");
+        }
     }
 }
