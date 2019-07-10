@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
+using System.Web.UI;
 using System.Xml;
 using AdvancedImage.Extensions;
 using AdvancedImage.Fields.Editor;
@@ -211,20 +213,20 @@ namespace AdvancedImage.Fields
 
         private List<AdvancedImageEditorItem> GetImageEditors()
         {
-            var imageCollection = this.GetXmlImages().ToArray();
+            var imageCollection = GetXmlImages().ToArray();
             var imageEditorsList = new List<AdvancedImageEditorItem>();
             if (imageCollection.Any())
             {
                 foreach (var image in imageCollection)
                 {
                     var imageId = image.GetAttribute("mediaid");
-                    var mediaItem = this.GetMediaItem(imageId);
+                    var mediaItem = GetMediaItem(imageId);
                     if (mediaItem != null)
                     {
                         GetMediaItemSrc(mediaItem, out var src);
                         var newImageEditor = new AdvancedImageEditorItem
                         {
-                            ControlId = this.ID,
+                            ControlId = ID,
                             ImageId = imageId,
                             ImageAlt = HttpUtility.HtmlEncode(mediaItem["Alt"]),
                             CropFocus =
@@ -238,6 +240,24 @@ namespace AdvancedImage.Fields
             }
 
             return imageEditorsList;
+        }
+
+        protected override void DoRender(HtmlTextWriter output)
+        {
+            Assert.ArgumentNotNull(output, "output");
+            base.DoRender(output);
+            var editorModel = new AdvancedImageGalleryEditorModel
+            {
+                ControlId = ID,
+                Thumbnails = GetThumbnails(),
+                IsDebug = "0",
+                Details = GetDetails(),
+                Images = GetImageEditors()
+            };
+            var testViewRender =
+                HtmlHelperExtensions.GetRazorViewAsString("~/Views/Shared/Fields/AdvancedImageGallery.cshtml",
+                    editorModel);
+            output.Write(new MvcHtmlString(testViewRender));
         }
     }
 }
