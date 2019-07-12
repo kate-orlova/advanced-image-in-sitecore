@@ -292,7 +292,7 @@ namespace AdvancedImage.Fields
             {
                 detail = new
                 {
-                    imageId = contextImageId, 
+                    imageId = contextImageId,
                     html = HttpUtility.HtmlEncode(HtmlHelperExtensions.GetRazorViewAsString(
                         "~/Views/Shared/Fields/AdvancedImageGalleryItems.cshtml", GetImageEditors()))
                 }
@@ -300,6 +300,17 @@ namespace AdvancedImage.Fields
 
             SheerResponse.Eval(
                 $"document.querySelector('#{ID}_pane').dispatchEvent(new CustomEvent('updateGallery', {data.ToJson()}));");
+        }
+
+        private void ItemRemove(string imageId)
+        {
+            var xGallery = XmlValue.Xml.ToXDocument();
+            var targetImage = xGallery.Descendants().FirstOrDefault(e => imageId == e.Attribute("mediaid")?.Value);
+            targetImage?.Remove();
+            XmlValue = new XmlValue(xGallery.ToString(), "gallery");
+            SetModified();
+
+            UpdateImageGalleryUI(null);
         }
     }
 }
