@@ -312,5 +312,29 @@ namespace AdvancedImage.Fields
 
             UpdateImageGalleryUI(null);
         }
+
+        private void ItemMove(string imageId, bool left)
+        {
+            var xGallery = this.XmlValue.Xml.ToXDocument();
+            var targetImage = xGallery.Descendants().FirstOrDefault(e => imageId == e.Attribute("mediaid")?.Value);
+            var neighborImage = left ? targetImage?.PreviousNode : targetImage?.NextNode;
+            if (neighborImage != null)
+            {
+                targetImage.Remove();
+                if (left)
+                {
+                    neighborImage.AddBeforeSelf(targetImage);
+                }
+                else
+                {
+                    neighborImage.AddAfterSelf(targetImage);
+                }
+            }
+
+            XmlValue = new XmlValue(xGallery.ToString(), "gallery");
+            SetModified();
+
+            UpdateImageGalleryUI(imageId);
+        }
     }
 }
