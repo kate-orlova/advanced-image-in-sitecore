@@ -285,5 +285,21 @@ namespace AdvancedImage.Fields
 
             XmlValue = new XmlValue(string.Empty, "gallery");
         }
+
+        private void UpdateImageGalleryUI(string contextImageId)
+        {
+            var data = new
+            {
+                detail = new
+                {
+                    imageId = contextImageId, 
+                    html = HttpUtility.HtmlEncode(HtmlHelperExtensions.GetRazorViewAsString(
+                        "~/Views/Shared/Fields/AdvancedImageGalleryItems.cshtml", GetImageEditors()))
+                }
+            };
+
+            SheerResponse.Eval(
+                $"document.querySelector('#{ID}_pane').dispatchEvent(new CustomEvent('updateGallery', {data.ToJson()}));");
+        }
     }
 }
