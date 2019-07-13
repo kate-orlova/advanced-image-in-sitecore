@@ -355,5 +355,53 @@ namespace AdvancedImage.Fields
                 SetModified();
             }
         }
+
+        public override void HandleMessage(Message message)
+        {
+            base.HandleMessage(message);
+
+            if (message["id"] == this.ID)
+            {
+                if (message.Name.StartsWith("advancedimagegallery") && this.Disabled)
+                {
+                    return;
+                }
+
+                if (message.Name == "advancedimagegallery:additem")
+                {
+                    Sitecore.Context.ClientPage.Start(this, "AddItem");
+                    return;
+                }
+
+                if (message.Name == "advancedimagegallery:clear")
+                {
+                    ClearCollection();
+                    return;
+                }
+
+                if (message.Name == "advancedimagegallery:moveLeft")
+                {
+                    ItemMove(message["imgId"], true);
+                    return;
+                }
+
+                if (message.Name == "advancedimagegallery:moveRight")
+                {
+                    ItemMove(message["imgId"], false);
+                    return;
+                }
+
+                if (message.Name == "advancedimagegallery:remove")
+                {
+                    ItemRemove(message["imgId"]);
+                    return;
+                }
+
+                if (message.Name == "advancedimagegallery:crop")
+                {
+                    UpdateCropParameters(message);
+                }
+            }
+        }
     }
 }
