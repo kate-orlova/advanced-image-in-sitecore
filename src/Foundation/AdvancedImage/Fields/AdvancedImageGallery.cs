@@ -336,5 +336,24 @@ namespace AdvancedImage.Fields
 
             UpdateImageGalleryUI(imageId);
         }
+
+        private void UpdateCropParameters(Message message)
+        {
+            var imageId = message["imgId"];
+            var xGallery = XmlValue.Xml.ToXDocument();
+            var targetImage = xGallery.Descendants().FirstOrDefault(e => imageId == e.Attribute("mediaid")?.Value);
+
+            if (targetImage != null)
+            {
+                targetImage.SetAttributeValue("cropx", message["cx"]);
+                targetImage.SetAttributeValue("cropy", message["cy"]);
+                targetImage.SetAttributeValue("focusx", message["fx"]);
+                targetImage.SetAttributeValue("focusy", message["fy"]);
+                targetImage.SetAttributeValue("showFull", message["sf"]);
+
+                XmlValue = new XmlValue(xGallery.ToString(), "gallery");
+                SetModified();
+            }
+        }
     }
 }
