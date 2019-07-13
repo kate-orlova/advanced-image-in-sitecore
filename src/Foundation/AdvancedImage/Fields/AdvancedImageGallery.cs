@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.UI;
 using System.Xml;
+using System.Xml.Linq;
 using AdvancedImage.Extensions;
 using AdvancedImage.Fields.Editor;
 using Sitecore;
@@ -15,6 +16,8 @@ using Sitecore.Diagnostics;
 using Sitecore.Globalization;
 using Sitecore.Resources.Media;
 using Sitecore.Shell.Applications.ContentEditor;
+using Sitecore.Shell.Applications.Dialogs.ItemLister;
+using Sitecore.Shell.Applications.Dialogs.MediaBrowser;
 using Sitecore.Text;
 using Sitecore.Web.UI.Sheer;
 
@@ -401,6 +404,116 @@ namespace AdvancedImage.Fields
                 {
                     UpdateCropParameters(message);
                 }
+            }
+        }
+
+        private void AddItem(ClientPipelineArgs args)
+        {
+            ParseParameters(this.Source);
+            if (args.IsPostBack)
+            {
+                if (args.HasResult)
+                {
+                    LastSelectedItemId = args.Result;
+
+                    var xGallery = XmlValue.Xml.ToXDocument();
+                    if (xGallery == null)
+                    {
+                        return;
+                    }
+
+                    var existingImage = xGallery.Descendants()
+                        .FirstOrDefault(e => LastSelectedItemId == e.Attribute("mediaid")?.Value);
+                    if (existingImage != null)
+                    {
+                        SheerResponse.Eval("alert('Such media already included to gallery')");
+                        return;
+                    }
+
+                    //<image mediaid="{xxx}" cropx="0.71" cropy="0.22" focusx="0.421875" focusy="0.5625" showFull="false" />
+                    var newMediaNode = new XElement("image",
+                        new XAttribute("mediaid", this.LastSelectedItemId),
+                        new XAttribute("cropx", 0),
+                        new XAttribute("cropy", 0),
+                        new XAttribute("focusx", 0),
+                        new XAttribute("focusy", 0),
+                        new XAttribute("showFull", false)
+                    );
+
+                    xGallery.Root.Add(newMediaNode);
+
+                    XmlValue = new XmlValue(xGallery.ToString(), "gallery");
+                    Value = xGallery.ToString();
+                    SetModified();
+                    UpdateImageGalleryUI(this.LastSelectedItemId);
+                }
+            }
+            else
+            {
+                string imagesSourceFolderPath = null;
+
+                if (ImagesSourceFolderID != null)
+                {
+                    imagesSourceFolderPath = Client.GetItemNotNull(new ID(ImagesSourceFolderID)).Paths.Path;
+                }
+
+                var source = new UrlString(StringUtil.GetString(imagesSourceFolderPath, "/sitecore/media library"))
+                    .Path;
+
+                Item lastSelectedItem = null;
+                if (!string.IsNullOrEmpty(this.LastSelectedItemId))
+                {
+                    lastSelectedItem = Client.ContentDatabase.GetItem(this.LastSelectedItemId);
+                }
+
+                if (source.Contains("/sitecore/media library"))
+                {
+                    var options = new MediaBrowserOptions();
+
+                    if (source.StartsWith("~"))
+                    {
+                        options.Root = Client.GetItemNotNull(ItemIDs.MediaLibraryRoot);
+                        options.SelectedItem = Client.GetItemNotNull(source.Substring(1));
+                    }
+                    else
+                    {
+                        options.Root = Client.GetItemNotNull(source);
+                    }
+
+                    if (lastSelectedItem != null && lastSelectedItem.Parent.Paths.IsDescendantOf(options.Root))
+                    {
+                        options.SelectedItem = lastSelectedItem.Parent;
+                    }
+
+                    SheerResponse.ShowModalDialog(options.ToUrlString().ToString(), true);
+                }
+                else
+                {
+                    var options = new SelectItemOptions
+                    {
+                        Title = "Please select an item",
+                        Text = "Select an item to add",
+                        Icon = "Applications/32x32/star_green.png"
+                    };
+                    if (source.StartsWith("~"))
+                    {
+                        options.Root = Client.GetItemNotNull(ItemIDs.ContentRoot);
+                        options.SelectedItem = Client.GetItemNotNull(source.Substring(1));
+                    }
+                    else
+                    {
+                        options.Root = Client.GetItemNotNull(source);
+                    }
+
+                    if (lastSelectedItem != null && lastSelectedItem.Paths.IsDescendantOf(options.Root))
+                    {
+                        options.SelectedItem = lastSelectedItem;
+                    }
+
+                    SheerResponse.ShowModalDialog(options.ToUrlString().ToString(), true);
+                }
+
+                args.WaitForPostBack();
             }
         }
     }
