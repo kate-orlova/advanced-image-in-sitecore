@@ -13,12 +13,14 @@ using Sitecore.Configuration;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
+using Sitecore.Exceptions;
 using Sitecore.Globalization;
 using Sitecore.Resources.Media;
 using Sitecore.Shell.Applications.ContentEditor;
 using Sitecore.Shell.Applications.Dialogs.ItemLister;
 using Sitecore.Shell.Applications.Dialogs.MediaBrowser;
 using Sitecore.Text;
+using Sitecore.Web;
 using Sitecore.Web.UI.Sheer;
 
 namespace AdvancedImage.Fields
@@ -522,6 +524,60 @@ namespace AdvancedImage.Fields
                     SheerResponse.ShowModalDialog(options.ToUrlString().ToString(), true);
                 }
 
+                args.WaitForPostBack();
+            }
+        }
+
+        protected void BrowseImage(ClientPipelineArgs args)
+        {
+            Assert.ArgumentNotNull(args, "args");
+            if (!args.IsPostBack)
+            {
+                var source = new[] {"/sitecore/media library"};
+                var str = StringUtil.GetString(source);
+                var str1 = str;
+                var attribute = XmlValue.GetAttribute("mediaid");
+                var str2 = attribute;
+                if (str.StartsWith("~", StringComparison.InvariantCulture))
+                {
+                    str1 = StringUtil.Mid(str, 1);
+                    if (string.IsNullOrEmpty(attribute))
+                    {
+                        attribute = str1;
+                    }
+
+                    str = "/sitecore/media library";
+                }
+
+                var language = Language.Parse(this.ItemLanguage);
+                var mediaBrowserOption = new MediaBrowserOptions();
+                var item = Client.ContentDatabase.GetItem(str, language);
+                if (item == null)
+                {
+                    throw new ClientAlertException("The source of this Image field references to a non existing item.");
+                }
+
+                mediaBrowserOption.Root = item;
+                if (!string.IsNullOrEmpty(attribute))
+                {
+                    Item item1 = Client.ContentDatabase.GetItem(attribute, language);
+                    if (item1 != null)
+                    {
+                        mediaBrowserOption.SelectedItem = item1;
+                    }
+                }
+
+                var urlHandle = new UrlHandle
+                {
+                    ["ro"] = str,
+                    ["fo"] = str1,
+                    ["db"] = Client.ContentDatabase.Name,
+                    ["la"] = ItemLanguage,
+                    ["va"] = str2
+                };
+                UrlString urlString = mediaBrowserOption.ToUrlString();
+                urlHandle.Add(urlString);
+                SheerResponse.ShowModalDialog(urlString.ToString(), "1200px", "700px", string.Empty, true);
                 args.WaitForPostBack();
             }
         }
