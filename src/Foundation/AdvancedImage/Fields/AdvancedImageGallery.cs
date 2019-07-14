@@ -83,6 +83,15 @@ namespace AdvancedImage.Fields
             return XmlValue.ToString();
         }
 
+        protected override void SetModified()
+        {
+            base.SetModified();
+            if (TrackModified)
+            {
+                Sitecore.Context.ClientPage.Modified = true;
+            }
+        }
+
         public override void SetValue(string value)
         {
             Assert.ArgumentNotNull(value, "value");
