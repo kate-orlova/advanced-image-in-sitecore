@@ -580,6 +580,27 @@ namespace AdvancedImage.Fields
                 SheerResponse.ShowModalDialog(urlString.ToString(), "1200px", "700px", string.Empty, true);
                 args.WaitForPostBack();
             }
+            else if (!string.IsNullOrEmpty(args.Result) && args.Result != "undefined")
+            {
+                MediaItem mediaItem = Client.ContentDatabase.Items[args.Result];
+                if (mediaItem == null)
+                {
+                    SheerResponse.Alert("Item is not found.");
+                    return;
+                }
+
+                TemplateItem template = mediaItem.InnerItem.Template;
+                if (template != null && !IsImageMedia(template))
+                {
+                    SheerResponse.Alert("The selected item does not contain an image.");
+                    return;
+                }
+
+                XmlValue.SetAttribute("mediaid", mediaItem.ID.ToString());
+                Value = mediaItem.MediaPath;
+                Update(false);
+                SetModified();
+            }
         }
     }
 }
