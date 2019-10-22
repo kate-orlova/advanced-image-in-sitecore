@@ -3,7 +3,9 @@ Advanced Image in Sitecore module.
 
 ## Sitecore Package
 A Sitecore package is composed of the following sources:
+1. Advanced Field Types
 1. Data Templates
+1. Module Thumbnails
 
 # Contribution
 Hope you found this module useful, your contributions and suggestions will be very much appreciated. Please submit a pull request.
