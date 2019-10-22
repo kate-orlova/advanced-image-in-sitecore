@@ -1,6 +1,10 @@
 # Advanced Image in Sitecore
 Advanced Image in Sitecore module.
 
+## Sitecore Package
+A Sitecore package is composed of the following sources:
+1. Data Templates
+
 # Contribution
 Hope you found this module useful, your contributions and suggestions will be very much appreciated. Please submit a pull request.
 
