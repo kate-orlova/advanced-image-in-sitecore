@@ -1,8 +1,8 @@
 # Advanced Image in Sitecore
-Advanced Image in Sitecore module.
+The Advanced Image in Sitecore module.
 
 ## Sitecore Package
-A Sitecore package is composed of the following sources:
+There is a Sitecore package file `Sitecore package for AdvancedImage module.zip` in `..\Sitecore packages folder`, it is composed of the following sources:
 1. Advanced Field Types
 1. Data Templates
 1. Module Thumbnails
