@@ -1,5 +1,5 @@
 # Advanced Image in Sitecore
-The Advanced Image in Sitecore module.
+The Advanced Image in Sitecore module helps to control the cropping of images with a focal point.
 
 ## Sitecore Package
 There is a Sitecore package file `Sitecore package for AdvancedImage module.zip` in `..\Sitecore packages folder`, it is composed of the following sources:
