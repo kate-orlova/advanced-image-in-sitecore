@@ -7,6 +7,8 @@ There is a Sitecore package file `Sitecore package for AdvancedImage module.zip`
 <img src="https://github.com/kate-orlova/advanced-image-in-sitecore/blob/master/assets/Sitecore%20package/Advanced%20Field%20Types.png" alt="Advanced Field Types" width="350">
 
 2. Data Templates
+<img src="https://github.com/kate-orlova/advanced-image-in-sitecore/blob/master/assets/Sitecore%20package/Data%20Templates.png" alt="Data Templates" width="350">
+
 3. Module Thumbnails
 4. Custom Experience Buttons
 
