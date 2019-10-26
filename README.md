@@ -1,3 +1,4 @@
+![GitHub top language](https://img.shields.io/github/languages/top/kate-orlova/advanced-image-in-sitecore.svg?style=flat)
 ![GitHub repo size](https://img.shields.io/github/repo-size/kate-orlova/advanced-image-in-sitecore.svg?style=flat)
 
 # Advanced Image in Sitecore
