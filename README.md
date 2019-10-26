@@ -10,6 +10,8 @@ There is a Sitecore package file `Sitecore package for AdvancedImage module.zip`
 <img src="https://github.com/kate-orlova/advanced-image-in-sitecore/blob/master/assets/Sitecore%20package/Data%20Templates.png" alt="Data Templates" width="350">
 
 3. Module Thumbnails
+<img src="https://github.com/kate-orlova/advanced-image-in-sitecore/blob/master/assets/Sitecore%20package/Module%20Thumbnails.png" alt="Module Thumbnails" width="350">
+
 4. Custom Experience Buttons
 
 # Contribution
