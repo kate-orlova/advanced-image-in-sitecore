@@ -4,9 +4,11 @@ The Advanced Image in Sitecore module helps to control the cropping of images wi
 ## Sitecore Package
 There is a Sitecore package file `Sitecore package for AdvancedImage module.zip` in `..\Sitecore packages folde r`, it is composed of the following sources:
 1. Advanced Field Types
-1. Data Templates
-1. Module Thumbnails
-1. Custom Experience Buttons
+<img src="https://github.com/kate-orlova/advanced-image-in-sitecore/blob/master/assets/Sitecore%20package/Advanced%20Field%20Types.png" alt="Advanced Field Types" width="350">
+
+2. Data Templates
+3. Module Thumbnails
+4. Custom Experience Buttons
 
 # Contribution
 Hope you found this module useful, your contributions and suggestions will be very much appreciated. Please submit a pull request.
