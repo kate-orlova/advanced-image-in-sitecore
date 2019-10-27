@@ -1,3 +1,4 @@
+[![GitHub license](https://img.shields.io/github/license/kate-orlova/advanced-image-in-sitecore.svg)](https://github.com/kate-orlova/advanced-image-in-sitecore/blob/master/LICENSE)
 ![GitHub language count](https://img.shields.io/github/languages/count/kate-orlova/advanced-image-in-sitecore.svg?style=flat)
 ![GitHub top language](https://img.shields.io/github/languages/top/kate-orlova/advanced-image-in-sitecore.svg?style=flat)
 ![GitHub repo size](https://img.shields.io/github/repo-size/kate-orlova/advanced-image-in-sitecore.svg?style=flat)
