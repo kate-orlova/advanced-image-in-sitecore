@@ -18,6 +18,8 @@ The solution consists of the following key elements:
 ## 1. Admin Interface
 The main fields  in `\Fileds\` folder are
 1. Advanced Image
+1. Advanced Image Gallery
+1. Slider
 
 There are a few admin views in `\Views\Shared\` folder for
 - image
