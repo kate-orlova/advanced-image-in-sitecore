@@ -16,6 +16,9 @@ The solution consists of the following key elements:
 1. Sitecore package
 
 ## 1. Admin Interface
+The main fields  in `\Fileds\` folder are
+1. Advanced Image
+
 There are a few admin views in `\Views\Shared\` folder for
 - image
 - image details
