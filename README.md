@@ -15,8 +15,11 @@ The solution consists of the following key elements:
 1. Config
 1. Sitecore package
 
-## Sitecore Package
-There is a Sitecore package file `Sitecore package for AdvancedImage module.zip` in `..\Sitecore packages folde r`, it is composed of the following sources:
+## 1. Admin Interface
+All admin CSS, JavaScript and templates are defined in `\sitecore modules\` folder.
+
+## 7. Sitecore Package
+There is a Sitecore package file `Sitecore package for AdvancedImage module.zip` in `..\Sitecore packages folder`, it is composed of the following sources:
 1. Advanced Field Types
 <img src="https://github.com/kate-orlova/advanced-image-in-sitecore/blob/master/assets/Sitecore%20package/Advanced%20Field%20Types.png" alt="Advanced Field Types" width="350">
 
