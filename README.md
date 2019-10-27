@@ -16,6 +16,14 @@ The solution consists of the following key elements:
 1. Sitecore package
 
 ## 1. Admin Interface
+There are a few admin views in `\Views\Shared\` folder for
+- image
+- image details
+- gallery
+- gallery items
+- thumbnails
+- image update
+
 All admin CSS, JavaScript and templates are defined in `\sitecore modules\` folder.
 
 ## 7. Sitecore Package
