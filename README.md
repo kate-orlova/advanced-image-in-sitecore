@@ -29,6 +29,11 @@ There are a few admin views in `\Views\Shared\` folder for
 - thumbnails
 - image update
 
+Example of the editing interface:
+
+![Editing interface](/assets/editing%20interface.png)
+
+
 All admin CSS, JavaScript and templates are defined in `\sitecore modules\` folder.
 
 Glass Mapper ORM is used to map the advanced image types from Sitecore field values to typed business entities, see `\GlassMapper\` folder.
