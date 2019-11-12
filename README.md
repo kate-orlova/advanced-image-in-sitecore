@@ -29,12 +29,32 @@ There are a few admin views in `\Views\Shared\` folder for
 - thumbnails
 - image update
 
+Example of the editing interface:
+
+![Editing interface](/assets/editing%20interface.png)
+
+
 All admin CSS, JavaScript and templates are defined in `\sitecore modules\` folder.
 
 Glass Mapper ORM is used to map the advanced image types from Sitecore field values to typed business entities, see `\GlassMapper\` folder.
 
 ## 2. Processors
 `..\src\Foundation\AdvancedImage\Processors\CropProcessor.cs` is a cropping processor being called by Sitecore's Media Handler.
+
+## 3. Requests
+`..\src\Foundation\AdvancedImage\Requests\CropMediaRequest.cs` defines the cropping media request being called from the front-end and makes sure that the custom parameters are cached in `.ini` file within `/App_Data/` folder.
+
+## 4. Pipelines
+`..\src\Foundation\AdvancedImage\Pipeline\AddItemLinkReferencesExtended.cs` is an extension for publishing pipeline for related items.
+
+## 5. Front-end
+TBC
+
+## 6 Config
+`..\src\Foundation\AdvancedImage\App_Config\Include\Foundation.AdvancedImage.config` specifies the image processing pipeline.
+
+`..\src\Foundation\AdvancedImage\App_Config\Include\Sitecore.Framework.Fields.AdvancedImage.config` defines the Advanced Image module settings in Sitecore.
+
 
 ## 7. Sitecore Package
 There is a Sitecore package file `Sitecore package for AdvancedImage module.zip` in `..\Sitecore packages folder`, it is composed of the following sources:
