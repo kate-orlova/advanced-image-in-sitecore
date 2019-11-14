@@ -75,6 +75,9 @@ There is a Sitecore package file `Sitecore package for AdvancedImage module.zip`
 4. Custom Experience Buttons
 <img src="https://github.com/kate-orlova/advanced-image-in-sitecore/blob/master/assets/Sitecore%20package/Custom%20Experience%20Buttons.png" alt="Custom Experience Buttons" width="350">
 
+# Installation Guide
+TBC
+
 # Contribution
 Hope you found this module useful, your contributions and suggestions will be very much appreciated. Please submit a pull request.
 
