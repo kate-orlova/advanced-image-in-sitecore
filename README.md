@@ -44,6 +44,11 @@ Glass Mapper ORM is used to map the advanced image types from Sitecore field val
 ## 3. Requests
 `..\src\Foundation\AdvancedImage\Requests\CropMediaRequest.cs` defines the cropping media request being called from the front-end and makes sure that the custom parameters are cached in `.ini` file within `/App_Data/` folder.
 
+URL params are being specified  in `..\src\Foundation\AdvancedImage\GlassMapper\Fields\AdvanceImageField.cs`:
+- CropX, CropY - for the cropping
+- FocusX, FocusY - for the focal point
+- ShowFull
+
 ## 4. Pipelines
 `..\src\Foundation\AdvancedImage\Pipeline\AddItemLinkReferencesExtended.cs` is an extension for publishing pipeline for related items.
 
@@ -69,6 +74,9 @@ There is a Sitecore package file `Sitecore package for AdvancedImage module.zip`
 
 4. Custom Experience Buttons
 <img src="https://github.com/kate-orlova/advanced-image-in-sitecore/blob/master/assets/Sitecore%20package/Custom%20Experience%20Buttons.png" alt="Custom Experience Buttons" width="350">
+
+# Installation Guide
+TBC
 
 # Contribution
 Hope you found this module useful, your contributions and suggestions will be very much appreciated. Please submit a pull request.
