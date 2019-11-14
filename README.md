@@ -78,6 +78,10 @@ There is a Sitecore package file `Sitecore package for AdvancedImage module.zip`
 # Installation Guide
 TBC
 
+Similarly you can configure an image gallery, its editing interface will look as follows:
+
+![Editing interface for an image gallery](/assets/editing%20interface.png)
+
 # Contribution
 Hope you found this module useful, your contributions and suggestions will be very much appreciated. Please submit a pull request.
 
