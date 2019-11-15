@@ -29,9 +29,9 @@ There are a few admin views in `\Views\Shared\` folder for
 - thumbnails
 - image update
 
-Example of the editing interface:
+Example of the editing interface for an image:
 
-![Editing interface](/assets/editing%20interface.png)
+![Editing interface for an image](/assets/editing%20interface%20for%20image.png)
 
 
 All admin CSS, JavaScript and templates are defined in `\sitecore modules\` folder.
@@ -77,6 +77,10 @@ There is a Sitecore package file `Sitecore package for AdvancedImage module.zip`
 
 # Installation Guide
 TBC
+
+Similarly you can configure an image gallery, its editing interface will look as follows:
+
+![Editing interface for an image gallery](/assets/editing%20interface.png)
 
 # Contribution
 Hope you found this module useful, your contributions and suggestions will be very much appreciated. Please submit a pull request.
