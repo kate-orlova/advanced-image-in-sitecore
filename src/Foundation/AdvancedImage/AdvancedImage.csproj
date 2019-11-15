@@ -141,10 +141,10 @@
     <Compile Include="Fields\Editor\AdvancedImageEditorUpdateModel.cs" />
     <Compile Include="Fields\Editor\AdvancedImageGalleryEditorModel.cs" />
     <Compile Include="Fields\Slider.cs" />
-    <Compile Include="GlassMapper\DataMappers\SitecoreFieldAdvanceImageGalleryMapper.cs" />
-    <Compile Include="GlassMapper\DataMappers\SitecoreFieldAdvanceImageMapper.cs" />
-    <Compile Include="GlassMapper\Fields\AdvanceImageField.cs" />
-    <Compile Include="GlassMapper\Fields\AdvanceImageGalleryField.cs" />
+    <Compile Include="GlassMapper\DataMappers\SitecoreFieldAdvancedImageGalleryMapper.cs" />
+    <Compile Include="GlassMapper\DataMappers\SitecoreFieldAdvancedImageMapper.cs" />
+    <Compile Include="GlassMapper\Fields\AdvancedImageField.cs" />
+    <Compile Include="GlassMapper\Fields\AdvancedImageGalleryField.cs" />
     <Compile Include="GlassMapper\Models\BaseGlassMapperFluentRegistration.cs" />
     <Compile Include="Helpers\AdvancedImageHelper.cs" />
     <Compile Include="Pipeline\AddItemLinkReferencesExtended.cs" />

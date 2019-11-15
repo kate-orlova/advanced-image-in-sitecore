@@ -10,10 +10,10 @@ using Sitecore.StringExtensions;
 
 namespace AdvancedImage.GlassMapper.DataMappers
 {
-    public class SitecoreFieldAdvanceImageGalleryMapper : AbstractSitecoreFieldMapper
+    public class SitecoreFieldAdvancedImageGalleryMapper : AbstractSitecoreFieldMapper
     {
-        public SitecoreFieldAdvanceImageGalleryMapper()
-            : base(typeof(AdvanceImageGalleryField))
+        public SitecoreFieldAdvancedImageGalleryMapper()
+            : base(typeof(AdvancedImageGalleryField))
         {
         }
 
@@ -31,14 +31,14 @@ namespace AdvancedImage.GlassMapper.DataMappers
         public override object GetField(Field field, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
             var sitecoreGalleryField = new LinkField(field);
-            var advancedGallery = new AdvanceImageGalleryField();
+            var advancedGallery = new AdvancedImageGalleryField();
 
             var stringValue = sitecoreGalleryField.Value.IsNullOrEmpty() ? "<gallery />" : sitecoreGalleryField.Value;
 
             var xml = new XmlDocument();
             xml.LoadXml(stringValue);
             var gallery = xml.DocumentElement;
-            var galleryImages = new List<AdvanceImageField>();
+            var galleryImages = new List<AdvancedImageField>();
             if (gallery != null && gallery.HasChildNodes)
             {
                 foreach (XmlElement galleryChildNode in gallery.ChildNodes)

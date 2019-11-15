@@ -2,7 +2,7 @@
 
 namespace AdvancedImage.GlassMapper.Fields
 {
-    public class AdvanceImageField : Glass.Mapper.Sc.Fields.Image
+    public class AdvancedImageField : Glass.Mapper.Sc.Fields.Image
     {
         public float CropX { get; set; }
 

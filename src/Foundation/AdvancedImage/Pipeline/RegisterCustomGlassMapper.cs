@@ -8,8 +8,8 @@ namespace AdvancedImage.Pipeline
     {
         public override void RegisterFluently(IDependencyResolver glassDependencyResolver)
         {
-            glassDependencyResolver.DataMapperFactory.Insert(0, () => new SitecoreFieldAdvanceImageMapper());
-            glassDependencyResolver.DataMapperFactory.Insert(0, () => new SitecoreFieldAdvanceImageGalleryMapper());
+            glassDependencyResolver.DataMapperFactory.Insert(0, () => new SitecoreFieldAdvancedImageMapper());
+            glassDependencyResolver.DataMapperFactory.Insert(0, () => new SitecoreFieldAdvancedImageGalleryMapper());
         }
     }
 }

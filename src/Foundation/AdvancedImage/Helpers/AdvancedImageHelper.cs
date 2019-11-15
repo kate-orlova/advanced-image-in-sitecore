@@ -9,7 +9,7 @@ namespace AdvancedImage.Helpers
 {
     internal static class AdvancedImageHelper
     {
-        internal static AdvanceImageField ConvertMediaItemToField(XmlElement elementNode, Database database)
+        internal static AdvancedImageField ConvertMediaItemToField(XmlElement elementNode, Database database)
         {
             var id = elementNode.GetAttribute("mediaid");
             var mediaItem = database.GetItem(new ID(id));
@@ -27,7 +27,7 @@ namespace AdvancedImage.Helpers
             float.TryParse(focusY, NumberStyles.Any, CultureInfo.InvariantCulture, out var fy);
             bool.TryParse(showFull, out var sf);
 
-            var resultImage = new AdvanceImageField();
+            var resultImage = new AdvancedImageField();
             resultImage.ShowFull = sf;
             resultImage.CropX = cx;
             resultImage.CropY = cy;

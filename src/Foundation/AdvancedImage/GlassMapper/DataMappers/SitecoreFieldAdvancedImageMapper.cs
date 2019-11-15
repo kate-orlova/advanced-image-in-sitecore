@@ -9,9 +9,9 @@ using Sitecore.Mvc.Extensions;
 
 namespace AdvancedImage.GlassMapper.DataMappers
 {
-    public class SitecoreFieldAdvanceImageMapper : AbstractSitecoreFieldMapper
+    public class SitecoreFieldAdvancedImageMapper : AbstractSitecoreFieldMapper
     {
-        public SitecoreFieldAdvanceImageMapper() : base(typeof(AdvanceImageField))
+        public SitecoreFieldAdvancedImageMapper() : base(typeof(AdvancedImageField))
         {
         }
 
@@ -29,7 +29,7 @@ namespace AdvancedImage.GlassMapper.DataMappers
         public override object GetField(Field field, SitecoreFieldConfiguration config, SitecoreDataMappingContext context)
         {
             var sitecoreImage = new ImageField(field);
-            var defaultImage = new AdvanceImageField();
+            var defaultImage = new AdvancedImageField();
 
             if (sitecoreImage.Value.IsEmptyOrNull())
             {
