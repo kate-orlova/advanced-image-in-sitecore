@@ -8,7 +8,9 @@ using Sitecore.Collections;
 using Sitecore.Data.Managers;
 using Sitecore.Resources.Media;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
@@ -19,6 +21,7 @@ namespace AdvancedImage.Extensions
     public static class HtmlHelperExtensions
     {
         private static readonly Regex SitecoreImgSrcRegex = new Regex(@"(src\=\""([^""]*)\"")", RegexOptions.Compiled);
+        private static List<int> defaultSrcSetSizes = new List<int> {320, 360, 640, 720, 960, 1280, 1440};
 
         public static string GetRazorViewAsString(string viewPath, object model)
         {
@@ -113,6 +116,45 @@ namespace AdvancedImage.Extensions
                 : $"{url}{separator}mw={maxWidth}";
             var finalUrl = HashingUtils.ProtectAssetUrl(mediaUrl);
             return finalUrl;
+        }
+
+        public static MvcHtmlString GetResizedSrcSet(
+            this HtmlHelper helper,
+            Image image,
+            int[] sizes = null,
+            bool useAspectRatio = true,
+            Func<int, string> focalPointFunc = null,
+            bool useFocalPointFunc = false)
+        {
+            if (image == null) return new MvcHtmlString(string.Empty);
+
+            if (image.Width == 0 || image.Height == 0) useAspectRatio = false;
+
+            var srcSetFormat = useAspectRatio ? "{0} {1}w {2}h" : "{0} {1}w";
+
+            var sizesList = new List<int>(defaultSrcSetSizes);
+            if (sizes != null) sizesList.AddRange(sizes);
+
+            double aspectRatio = 0;
+            if (useAspectRatio)
+            {
+                aspectRatio = (double) image.Width / image.Height;
+            }
+
+            focalPointFunc = useFocalPointFunc ? focalPointFunc : null;
+
+            var srcSetList = new List<string>();
+            foreach (var size in sizesList.OrderBy(x => x))
+            {
+                var resizedMediaUrl = GetResizedMediaUrl(helper, image.Src, size,
+                    focalPointFunc != null ? focalPointFunc(size) : string.Empty);
+                srcSetList.Add(
+                    useAspectRatio
+                        ? string.Format(srcSetFormat, resizedMediaUrl, size, (int) (size / aspectRatio))
+                        : string.Format(srcSetFormat, resizedMediaUrl, size));
+            }
+
+            return new MvcHtmlString(string.Join(",", srcSetList));
         }
     }
 }
