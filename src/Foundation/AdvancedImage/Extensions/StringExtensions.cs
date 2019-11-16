@@ -82,5 +82,9 @@ namespace AdvancedImage.Extensions
             if (string.IsNullOrEmpty(value)) return rigthValue;
             return value + separator + rigthValue;
         }
+        public static bool NotEmpty(this string value)
+        {
+            return !string.IsNullOrEmpty(value) && !string.IsNullOrWhiteSpace(value);
+        }
     }
 }
