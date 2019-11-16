@@ -5,9 +5,12 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using AdvancedImage.Controllers;
+using AdvancedImage.GlassMapper.Fields;
 using Glass.Mapper.Sc.Fields;
+using Glass.Mapper.Sc.Web.Mvc;
 using Sitecore.Collections;
 using Sitecore.Data.Managers;
+using Sitecore.Resources.Media;
 
 namespace AdvancedImage.Extensions
 {
@@ -67,6 +70,31 @@ namespace AdvancedImage.Extensions
                                                MXTires.Microdata.CreativeWorks.ImageObject>());
 
             return tagResult;
+        }
+
+        private static HtmlString BuildEditableImageTag<TModel>(
+            GlassHtmlMvc<TModel> glassView,
+            object item,
+            bool isAdvancedImage,
+            AdvancedImageField advancedImageField,
+            bool useAdvancedImage,
+            object parameters = null,
+            bool outputHeightWidth = false,
+            float cropFactor = 0)
+        {
+            if (!isAdvancedImage)
+                return glassView.RenderImage(item, itemField => itemField, parameters, true, outputHeightWidth);
+
+            var attributes = new SafeDictionary<string>();
+            var src = advancedImageField.Src;
+            if (useAdvancedImage)
+            {
+                src += $"?{advancedImageField.GetFocalPointParameters(advancedImageField.Width, cropFactor)}";
+            }
+
+            var protectedUrl = HashingUtils.ProtectAssetUrl(src);
+            attributes.Add("src", protectedUrl);
+            return BuildImageTag(attributes, advancedImageField);
         }
     }
 }
