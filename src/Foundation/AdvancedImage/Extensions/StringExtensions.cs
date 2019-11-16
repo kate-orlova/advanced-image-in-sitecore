@@ -55,6 +55,22 @@ namespace AdvancedImage.Extensions
             return result;
         }
 
+        public static IEnumerable<int> ParseIntArray(this string value, char separator = ',')
+        {
+            return value.ParseArray(
+                separator,
+                s =>
+                {
+                    var itemResult = new ParseResult<int>
+                    {
+                        Successful = int.TryParse(s, out var parsedItem),
+                        Value = parsedItem
+                    };
+
+                    return itemResult;
+                });
+        }
+
         public class ParseResult<TValue>
         {
             public TValue Value { get; set; }
