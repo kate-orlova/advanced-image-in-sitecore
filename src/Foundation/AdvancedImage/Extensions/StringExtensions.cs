@@ -77,5 +77,10 @@ namespace AdvancedImage.Extensions
 
             public bool Successful { get; set; }
         }
+        public static string Append(this string value, string rigthValue, string separator = "")
+        {
+            if (string.IsNullOrEmpty(value)) return rigthValue;
+            return value + separator + rigthValue;
+        }
     }
 }
