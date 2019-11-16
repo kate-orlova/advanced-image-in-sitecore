@@ -22,6 +22,38 @@ namespace AdvancedImage.Extensions
                 : defaultValue;
         }
 
+        public static IEnumerable<TElement> ParseArray<TElement>(this string value, char separator,
+            Func<string, ParseResult<TElement>> itemParser)
+        {
+            if (itemParser == null)
+            {
+                throw new ArgumentNullException(nameof(itemParser));
+            }
+
+            var result = new List<TElement>();
+
+            if (string.IsNullOrEmpty(value)) return result;
+
+            foreach (var item in value.Split(separator))
+            {
+                try
+                {
+                    var itemParseResult = itemParser(item);
+                    if (itemParseResult.Successful)
+                    {
+                        result.Add(itemParseResult.Value);
+                    }
+                }
+                catch (OverflowException)
+                {
+                }
+                catch (FormatException)
+                {
+                }
+            }
+
+            return result;
+        }
 
         public class ParseResult<TValue>
         {
