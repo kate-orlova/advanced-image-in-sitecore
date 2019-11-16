@@ -1,4 +1,7 @@
-﻿namespace AdvancedImage.Extensions
+﻿using System;
+using System.Collections.Generic;
+
+namespace AdvancedImage.Extensions
 {
     public static class StringExtensions
     {
@@ -17,6 +20,14 @@
             return bool.TryParse(value, out var parsedValue)
                 ? parsedValue
                 : defaultValue;
+        }
+
+
+        public class ParseResult<TValue>
+        {
+            public TValue Value { get; set; }
+
+            public bool Successful { get; set; }
         }
     }
 }
