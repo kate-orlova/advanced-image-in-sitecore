@@ -1,16 +1,18 @@
-﻿using System;
-using System.IO;
-using System.Text.RegularExpressions;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Routing;
-using AdvancedImage.Controllers;
+﻿using AdvancedImage.Controllers;
 using AdvancedImage.GlassMapper.Fields;
+using Glass.Mapper;
+using Glass.Mapper.Sc;
 using Glass.Mapper.Sc.Fields;
 using Glass.Mapper.Sc.Web.Mvc;
 using Sitecore.Collections;
 using Sitecore.Data.Managers;
 using Sitecore.Resources.Media;
+using System;
+using System.IO;
+using System.Text.RegularExpressions;
+using System.Web;
+using System.Web.Mvc;
+using System.Web.Routing;
 
 namespace AdvancedImage.Extensions
 {
@@ -95,6 +97,22 @@ namespace AdvancedImage.Extensions
             var protectedUrl = HashingUtils.ProtectAssetUrl(src);
             attributes.Add("src", protectedUrl);
             return BuildImageTag(attributes, advancedImageField);
+        }
+
+        public static string GetResizedMediaUrl(this HtmlHelper helper, string url, int maxWidth,
+            string focalPointSettings = null)
+        {
+            if (string.IsNullOrWhiteSpace(url))
+            {
+                return null;
+            }
+
+            var separator = url.Contains("?") ? "&" : "?";
+            var mediaUrl = focalPointSettings.HasValue()
+                ? $"{url}{separator}{focalPointSettings}"
+                : $"{url}{separator}mw={maxWidth}";
+            var finalUrl = HashingUtils.ProtectAssetUrl(mediaUrl);
+            return finalUrl;
         }
     }
 }
