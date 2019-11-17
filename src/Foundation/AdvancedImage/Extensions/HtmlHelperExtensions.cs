@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
@@ -221,6 +222,11 @@ namespace AdvancedImage.Extensions
                 parameters,
                 outputHeightWidth,
                 cropFactor);
+        }
+
+        private static Func<T, TImageModel> GetCompiled<T, TImageModel>(Expression<Func<T, TImageModel>> expression)
+        {
+            return expression.Compile();
         }
     }
 }
