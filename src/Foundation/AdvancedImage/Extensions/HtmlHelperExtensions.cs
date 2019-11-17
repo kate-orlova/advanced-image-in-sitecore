@@ -228,5 +228,28 @@ namespace AdvancedImage.Extensions
         {
             return expression.Compile();
         }
+
+        public static HtmlString RenderImageLazy<TModel>(
+            this HtmlHelper<TModel> htmlHelper,
+            Expression<Func<TModel, object>> field,
+            object parameters = null,
+            bool isEditable = false,
+            bool outputHeightWidth = false,
+            bool useAspectRatio = true,
+            float cropFactor = 0)
+        {
+            var glassView = htmlHelper.Glass();
+            var item = GetCompiled(field)(glassView.Model);
+            var imageField = item as Image;
+
+            return RenderImageLazy(
+                htmlHelper,
+                imageField,
+                parameters,
+                isEditable,
+                outputHeightWidth,
+                useAspectRatio,
+                cropFactor);
+        }
     }
 }
