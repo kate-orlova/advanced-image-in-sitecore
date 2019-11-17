@@ -57,6 +57,10 @@ There is an HTML extension `RenderImageLazy()` in `..\src\Foundation\AdvancedIma
 ```
 @Html.RenderImageLazy(YourModel.YourImage)
 ```
+or
+```
+@Html.RenderImageLazy(x => x.YourImage, cropFactor: 1)
+```
 
 ## 6 Config
 `..\src\Foundation\AdvancedImage\App_Config\Include\Foundation.AdvancedImage.config` specifies the image processing pipeline.
