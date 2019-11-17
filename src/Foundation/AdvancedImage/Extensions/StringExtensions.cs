@@ -86,5 +86,9 @@ namespace AdvancedImage.Extensions
         {
             return !string.IsNullOrEmpty(value) && !string.IsNullOrWhiteSpace(value);
         }
+        public static string OrDefault(this string value, string defaultValue)
+        {
+            return value.NotEmpty() ? value : defaultValue;
+        }
     }
 }
