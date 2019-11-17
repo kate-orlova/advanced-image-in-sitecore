@@ -53,7 +53,7 @@ URL params are being specified  in `..\src\Foundation\AdvancedImage\GlassMapper\
 `..\src\Foundation\AdvancedImage\Pipeline\AddItemLinkReferencesExtended.cs` is an extension for publishing pipeline for related items.
 
 ## 5. Front-end
-TBC
+There is an HTML extension `RenderImageLazy()` in `..\src\Foundation\AdvancedImage\Extensions\HtmlHelperExtensions.cs` rending an image as per the specified configuration accordingly.
 
 ## 6 Config
 `..\src\Foundation\AdvancedImage\App_Config\Include\Foundation.AdvancedImage.config` specifies the image processing pipeline.
