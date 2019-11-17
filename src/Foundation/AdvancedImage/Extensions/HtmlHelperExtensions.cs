@@ -156,6 +156,7 @@ namespace AdvancedImage.Extensions
 
             return new MvcHtmlString(string.Join(",", srcSetList));
         }
+
         private static HtmlString BuildNotEditableImageTag(
             HtmlHelper htmlHelper,
             Image imageField,
@@ -174,11 +175,52 @@ namespace AdvancedImage.Extensions
             }
 
             attributes["class"] = attributes["class"].Append("lazyload", " ");
-            attributes["data-srcset"] = htmlHelper.GetResizedSrcSet(imageField, sizes, useAspectRatio, focalPointFunc, useAdvancedImage).ToHtmlString();
+            attributes["data-srcset"] = htmlHelper
+                .GetResizedSrcSet(imageField, sizes, useAspectRatio, focalPointFunc, useAdvancedImage).ToHtmlString();
             attributes["data-sizes"] = "auto";
             attributes["alt"] = attributes["alt"].HasValue() || imageField == null ? attributes["alt"] : imageField.Alt;
 
             return BuildImageTag(attributes, imageField);
+        }
+
+        public static HtmlString RenderImageLazy<TModel>(
+            this HtmlHelper<TModel> htmlHelper,
+            Image field,
+            object parameters = null,
+            bool isEditable = false,
+            bool outputHeightWidth = false,
+            bool useAspectRatio = true,
+            float cropFactor = 0)
+        {
+            if (field == null || !field.MediaExists)
+                return new HtmlString(string.Empty);
+
+            if (cropFactor > 0) useAspectRatio = false;
+
+            var glassView = htmlHelper.Glass();
+            var item = field;
+            var advancedImageField = item as AdvancedImageField;
+            var isAdvancedImage = advancedImageField != null;
+            var useAdvancedImage = isAdvancedImage && !advancedImageField.ShowFull;
+            var focalPointFunc = useAdvancedImage
+                ? size => advancedImageField.GetFocalPointParameters(size, cropFactor)
+                : (Func<int, string>) null;
+
+            if (!isEditable || !glassView.IsInEditingMode)
+            {
+                return BuildNotEditableImageTag(htmlHelper, item, parameters, useAspectRatio, focalPointFunc,
+                    useAdvancedImage);
+            }
+
+            return BuildEditableImageTag(
+                glassView,
+                item,
+                isAdvancedImage,
+                advancedImageField,
+                useAdvancedImage,
+                parameters,
+                outputHeightWidth,
+                cropFactor);
         }
     }
 }
