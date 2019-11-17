@@ -7,7 +7,7 @@
     <div class="scContentControlImageImage" ondblclick="javascript:return scForm.postEvent(this,event,'@(Model.ControlId).Browse');" style="text-align: left;">
         <span style="display: inline-block; overflow: visible;" class="helper-tool-target">
             <img id="@(Model.ControlId)_image" src="@Model.Image.ImageSrc" id="@Model.Image.ImageId" class="helper-tool-img" />
-            <img class="reticle" src="/sitecore modules/advanceimage/img/target-selector.png" style="display: none;" />
+            <img class="reticle" src="/sitecore modules/advancedimage/img/target-selector.png" style="display: none;" />
         </span>
     </div>
     <a href="#" id="@(Model.ControlId)_crop_btn" class="scContentButton" onclick="javascript:return scForm.postEvent(this, event, 'contentimage:crop(id=@(Model.ControlId))');" style="display: none;">CROP</a>
@@ -29,14 +29,14 @@
         </div>
     </div>
     <input id="@(Model.ControlId)_crop" type="hidden" value="@(Model.Image.CropFocus)" />
-    <link href="/sitecore modules/advanceimage/css/focuspoint.css" rel="stylesheet" />
-    <link href="/sitecore modules/advanceimage/css/helper-tool.css" rel="stylesheet" />
+    <link href="/sitecore modules/advancedimage/css/focuspoint.css" rel="stylesheet" />
+    <link href="/sitecore modules/advancedimage/css/helper-tool.css" rel="stylesheet" />
     <script>
         jQuery(document).ready(function () {
             (function ($) {
                 var s = document.createElement("script");
                 s.type = "text/javascript";
-                s.src = "/sitecore modules/advanceimage/js/jquery.focuspoint.js";
+                s.src = "/sitecore modules/advancedimage/js/jquery.focuspoint.js";
                 $("head").append(s);
 
                 if ("@(Model.IsDebug)" == "1") {

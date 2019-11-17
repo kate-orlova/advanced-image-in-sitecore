@@ -44,7 +44,7 @@ Glass Mapper ORM is used to map the advanced image types from Sitecore field val
 ## 3. Requests
 `..\src\Foundation\AdvancedImage\Requests\CropMediaRequest.cs` defines the cropping media request being called from the front-end and makes sure that the custom parameters are cached in `.ini` file within `/App_Data/` folder.
 
-URL params are being specified  in `..\src\Foundation\AdvancedImage\GlassMapper\Fields\AdvanceImageField.cs`:
+URL params are being specified  in `..\src\Foundation\AdvancedImage\GlassMapper\Fields\AdvancedImageField.cs`:
 - CropX, CropY - for the cropping
 - FocusX, FocusY - for the focal point
 - ShowFull

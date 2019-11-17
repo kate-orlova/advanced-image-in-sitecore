@@ -3,7 +3,7 @@
     <div class="scContentControlImageImage" ondblclick="javascript:return scForm.postEvent(this,event,'{CONTROL_ID}.Browse')" style="text-align: left;">
         <span style="display: inline-block; overflow: visible;" class="helper-tool-target">
             <img id="{CONTROL_ID}_image" {IMAGE_ATTRS} class="helper-tool-img" />
-            <img class="reticle" src="/fields/advanceimage/img/target-selector.png" style="display: none;" />
+            <img class="reticle" src="/fields/advancedimage/img/target-selector.png" style="display: none;" />
         </span>
     </div>
     <a href="#" id="{CONTROL_ID}_crop_btn" class="scContentButton" onclick="javascript:return scForm.postEvent(this, event, 'contentimage:crop(id={CONTROL_ID})')" style="display: none;">CROP</a>
@@ -27,8 +27,8 @@
         </div>
     </div>
     <input id="{CONTROL_ID}_crop" type="hidden" value="{CROP_FOCUS}" />
-    <link href="/fields/advanceimage/css/focuspoint.css" rel="stylesheet" />
-    <link href="/fields/advanceimage/css/helper-tool.css" rel="stylesheet" />
+    <link href="/fields/advancedimage/css/focuspoint.css" rel="stylesheet" />
+    <link href="/fields/advancedimage/css/helper-tool.css" rel="stylesheet" />
     <script>
             jQuery(document).ready(function ()
             {
@@ -36,7 +36,7 @@
                 {
                     var s = document.createElement("script");
                     s.type = "text/javascript";
-                    s.src = "/fields/advanceimage/js/jquery.focuspoint.js";
+                    s.src = "/fields/advancedimage/js/jquery.focuspoint.js";
                     $("head").append(s);
 
                     if ("{IS_DEBUG}" == "1")

@@ -76,31 +76,31 @@ namespace AdvancedImage.Pipeline
                     source.AddRange(GetReferences(obj, sharedOnly, processedItems));
                 source.AddRange(PublishQueue.GetParents(obj));
                 source.Add(obj);
-                source.AddRange(GetAdvanceImageFieldsLinkedMediaItems(obj));
-                source.AddRange(GetAdvanceImageGalleryFieldsLinkedMediaItems(obj));
+                source.AddRange(GetAdvancedImageFieldsLinkedMediaItems(obj));
+                source.AddRange(GetAdvancedImageGalleryFieldsLinkedMediaItems(obj));
             }
 
             return source.Distinct(new ItemIdComparer());
         }
 
-        protected virtual List<Item> GetAdvanceImageFieldsLinkedMediaItems(Item item)
+        protected virtual List<Item> GetAdvancedImageFieldsLinkedMediaItems(Item item)
         {
             var mediaList = new List<Item>();
 
-            var advanceImageFields = item.Fields
-                .Where(x => string.Equals(x.TypeKey, "advance image", StringComparison.OrdinalIgnoreCase))
+            var advancedImageFields = item.Fields
+                .Where(x => string.Equals(x.TypeKey, "advanced image", StringComparison.OrdinalIgnoreCase))
                 .Select(x => new ImageField(x));
 
-            foreach (var advanceImageField in advanceImageFields)
+            foreach (var advancedImageField in advancedImageFields)
             {
                 try
                 {
-                    var target = advanceImageField.MediaItem;
+                    var target = advancedImageField.MediaItem;
                     AddMediaItemAndParentsToPublishList(target, mediaList);
                 }
                 catch (Exception ex)
                 {
-                    Log.Error("Error publishing advance image related media items", ex,
+                    Log.Error("Error publishing advanced image related media items", ex,
                         typeof(AddItemLinkReferencesExtended));
                 }
             }
@@ -108,18 +108,18 @@ namespace AdvancedImage.Pipeline
             return mediaList;
         }
 
-        protected virtual List<Item> GetAdvanceImageGalleryFieldsLinkedMediaItems(Item item)
+        protected virtual List<Item> GetAdvancedImageGalleryFieldsLinkedMediaItems(Item item)
         {
             var mediaList = new List<Item>();
 
-            var advanceImageGalleryFields = item.Fields
-                .Where(x => string.Equals(x.TypeKey, "advance image gallery", StringComparison.OrdinalIgnoreCase));
+            var advancedImageGalleryFields = item.Fields
+                .Where(x => string.Equals(x.TypeKey, "advanced image gallery", StringComparison.OrdinalIgnoreCase));
 
-            foreach (var advanceImageGalleryField in advanceImageGalleryFields)
+            foreach (var advancedImageGalleryField in advancedImageGalleryFields)
             {
                 try
                 {
-                    var value = advanceImageGalleryField.Value;
+                    var value = advancedImageGalleryField.Value;
 
                     if (value == null)
                         continue;
@@ -148,7 +148,7 @@ namespace AdvancedImage.Pipeline
                 }
                 catch (Exception ex)
                 {
-                    Log.Error("Error publishing advance image gallery related media items", ex,
+                    Log.Error("Error publishing advanced image gallery related media items", ex,
                         typeof(AddItemLinkReferencesExtended));
                 }
             }

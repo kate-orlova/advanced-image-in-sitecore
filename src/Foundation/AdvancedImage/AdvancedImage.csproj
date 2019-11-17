@@ -123,18 +123,18 @@
     <Content Include="Fields\Slider\css\jquery-ui.min.css" />
     <Content Include="Fields\Slider\js\jquery-ui.min.js" />
     <Content Include="Fields\Slider\template.html" />
-    <Content Include="sitecore modules\AdvanceImageGallery\css\focuspoint.css" />
-    <Content Include="sitecore modules\AdvanceImageGallery\css\helper-tool.css" />
-    <Content Include="sitecore modules\AdvanceImageGallery\detail.html" />
-    <Content Include="sitecore modules\AdvanceImageGallery\img\target-selector.png" />
-    <Content Include="sitecore modules\AdvanceImageGallery\js\jquery.focuspoint.js" />
-    <Content Include="sitecore modules\AdvanceImageGallery\js\jquery.focuspoint.min.js" />
-    <Content Include="sitecore modules\AdvanceImageGallery\template.html" />
-    <Content Include="sitecore modules\AdvanceImage\css\focuspoint.css" />
-    <Content Include="sitecore modules\AdvanceImage\css\helper-tool.css" />
-    <Content Include="sitecore modules\AdvanceImage\img\target-selector.png" />
-    <Content Include="sitecore modules\AdvanceImage\js\jquery.focuspoint.js" />
-    <Content Include="sitecore modules\AdvanceImage\js\jquery.focuspoint.min.js" />
+    <Content Include="sitecore modules\AdvancedImageGallery\css\focuspoint.css" />
+    <Content Include="sitecore modules\AdvancedImageGallery\css\helper-tool.css" />
+    <Content Include="sitecore modules\AdvancedImageGallery\detail.html" />
+    <Content Include="sitecore modules\AdvancedImageGallery\img\target-selector.png" />
+    <Content Include="sitecore modules\AdvancedImageGallery\js\jquery.focuspoint.js" />
+    <Content Include="sitecore modules\AdvancedImageGallery\js\jquery.focuspoint.min.js" />
+    <Content Include="sitecore modules\AdvancedImageGallery\template.html" />
+    <Content Include="sitecore modules\AdvancedImage\css\focuspoint.css" />
+    <Content Include="sitecore modules\AdvancedImage\css\helper-tool.css" />
+    <Content Include="sitecore modules\AdvancedImage\img\target-selector.png" />
+    <Content Include="sitecore modules\AdvancedImage\js\jquery.focuspoint.js" />
+    <Content Include="sitecore modules\AdvancedImage\js\jquery.focuspoint.min.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
