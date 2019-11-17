@@ -156,5 +156,29 @@ namespace AdvancedImage.Extensions
 
             return new MvcHtmlString(string.Join(",", srcSetList));
         }
+        private static HtmlString BuildNotEditableImageTag(
+            HtmlHelper htmlHelper,
+            Image imageField,
+            object parameters = null,
+            bool useAspectRatio = true,
+            Func<int, string> focalPointFunc = null,
+            bool useAdvancedImage = false)
+        {
+            var attributes = parameters.GetHtmlAttributeCollection(true).ToSafeDictionary();
+
+            int[] sizes = null;
+            var sizesStr = attributes["data-srcset"].OrDefault(attributes["sizes"]);
+            if (sizesStr.HasValue())
+            {
+                sizes = sizesStr.ParseIntArray().ToArray();
+            }
+
+            attributes["class"] = attributes["class"].Append("lazyload", " ");
+            attributes["data-srcset"] = htmlHelper.GetResizedSrcSet(imageField, sizes, useAspectRatio, focalPointFunc, useAdvancedImage).ToHtmlString();
+            attributes["data-sizes"] = "auto";
+            attributes["alt"] = attributes["alt"].HasValue() || imageField == null ? attributes["alt"] : imageField.Alt;
+
+            return BuildImageTag(attributes, imageField);
+        }
     }
 }
