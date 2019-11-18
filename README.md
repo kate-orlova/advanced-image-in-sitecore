@@ -53,14 +53,7 @@ URL params are being specified  in `..\src\Foundation\AdvancedImage\GlassMapper\
 `..\src\Foundation\AdvancedImage\Pipeline\AddItemLinkReferencesExtended.cs` is an extension for publishing pipeline for related items.
 
 ## 5. Front-end
-There is an HTML extension `RenderImageLazy()` in `..\src\Foundation\AdvancedImage\Extensions\HtmlHelperExtensions.cs` rending an image as per the specified configuration accordingly. You can simply call it from your view as follows:
-```
-@Html.RenderImageLazy(YourModel.YourImage)
-```
-or
-```
-@Html.RenderImageLazy(x => x.YourImage, cropFactor: 1)
-```
+There is an HTML extension `RenderImageLazy()` in `..\src\Foundation\AdvancedImage\Extensions\HtmlHelperExtensions.cs` rending an image as per the specified configuration accordingly. You can simply call it from your view as `@Html.RenderImageLazy(YourModel.YourImage)`.
 
 ## 6 Config
 `..\src\Foundation\AdvancedImage\App_Config\Include\Foundation.AdvancedImage.config` specifies the image processing pipeline.
@@ -101,6 +94,15 @@ There is a Sitecore package file `Sitecore package for AdvancedImage module.zip`
 1. Use an **AdvancedImage** property in your Model as follows:
 ```C#
 public virtual AdvancedImage.GlassMapper.Fields.AdvancedImageField Image { get; set; }
+```
+
+5. Add the required image rendering to your presentation view as per the below examples:
+```
+@Html.RenderImageLazy(YourModel.YourImage)
+```
+or
+```
+@Html.RenderImageLazy(x => x.YourImage, cropFactor: 1)
 ```
 
 Similarly you can configure an image gallery, its editing interface will look as follows:
