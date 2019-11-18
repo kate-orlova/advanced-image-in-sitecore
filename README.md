@@ -69,7 +69,7 @@ or
 
 
 ## 7. Sitecore Package
-There is a Sitecore package file `Sitecore package for AdvancedImage module.zip` in `..\Sitecore packages folder`, it is composed of the following sources:
+There is a Sitecore package file `Sitecore package for AdvancedImage module.zip` in `..\Sitecore packages` folder, it is composed of the following sources:
 1. Advanced Field Types
 <img src="https://github.com/kate-orlova/advanced-image-in-sitecore/blob/master/assets/Sitecore%20package/Advanced%20Field%20Types.png" alt="Advanced Field Types" width="350">
 
@@ -83,7 +83,9 @@ There is a Sitecore package file `Sitecore package for AdvancedImage module.zip`
 <img src="https://github.com/kate-orlova/advanced-image-in-sitecore/blob/master/assets/Sitecore%20package/Custom%20Experience%20Buttons.png" alt="Custom Experience Buttons" width="350">
 
 # Installation Guide
-1. Add the **AdvancedImage** project to the **Foundation** layer of your Sitecore solution and build it.
+1. Add the **AdvancedImage** project to the **Foundation** layer of your Sitecore solution and build it;
+
+1. Install the Sitecore package to have the required pre-requisite in place such as _Field Types, Data Templates_ and control elements;
 
 Similarly you can configure an image gallery, its editing interface will look as follows:
 
