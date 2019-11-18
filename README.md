@@ -83,7 +83,7 @@ There is a Sitecore package file `Sitecore package for AdvancedImage module.zip`
 <img src="https://github.com/kate-orlova/advanced-image-in-sitecore/blob/master/assets/Sitecore%20package/Custom%20Experience%20Buttons.png" alt="Custom Experience Buttons" width="350">
 
 # Installation Guide
-TBC
+1. Add the **AdvancedImage** project to the **Foundation** layer of your Sitecore solution and build it.
 
 Similarly you can configure an image gallery, its editing interface will look as follows:
 
