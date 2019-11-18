@@ -93,10 +93,15 @@ There is a Sitecore package file `Sitecore package for AdvancedImage module.zip`
      
       <img src="https://github.com/kate-orlova/advanced-image-in-sitecore/blob/master/assets/configuration_dimensions.png" alt="Module Configuration: dimensions" width="350">
 
-     b. Replace the **Image** type in the relevant _Data Template_ with the **AdvancedImage** type
+     b. Replace the **Image** type in the relevant _Data Template_ with the **AdvancedImage** type for your image field
      <img src="https://github.com/kate-orlova/advanced-image-in-sitecore/blob/master/assets/configuration_data_template.png" alt="Module Configuration: data template" width="350">
 
      Where **ImagesSourceFolderID** is a folder with images in Sitecore Media Gallery and **ThumbnailsFolderID** is Id in `/sitecore/system/modules/Advanced Image Module` with settings for preview (see the first step).
+
+1. Use an **AdvancedImage** property in your Model as follows:
+```C#
+public virtual AdvancedImage.GlassMapper.Fields.AdvancedImageField Image { get; set; }
+```
 
 Similarly you can configure an image gallery, its editing interface will look as follows:
 
