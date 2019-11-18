@@ -96,6 +96,8 @@ There is a Sitecore package file `Sitecore package for AdvancedImage module.zip`
      b. Replace the **Image** type in the relevant _Data Template_ with the **AdvancedImage** type
      <img src="https://github.com/kate-orlova/advanced-image-in-sitecore/blob/master/assets/configuration_data_template.png" alt="Module Configuration: data template" width="350">
 
+     Where **ImagesSourceFolderID** is a folder with images in Sitecore Media Gallery.
+
 Similarly you can configure an image gallery, its editing interface will look as follows:
 
 ![Editing interface for an image gallery](/assets/editing%20interface.png)
