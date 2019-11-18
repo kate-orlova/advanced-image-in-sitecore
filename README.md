@@ -88,6 +88,8 @@ There is a Sitecore package file `Sitecore package for AdvancedImage module.zip`
 1. Install the Sitecore package to have the required pre-requisite in place such as _Field Types, Data Templates_ and control elements;
 
 1. Adapt your Entity in Sitecore for use of the advanced images:
+     1. Go to the module settings and specify the required dimensions
+      <img src="https://github.com/kate-orlova/advanced-image-in-sitecore/blob/master/assets/configuration_dimensions.png" alt="Module Configuration: dimensions" width="350">
 
 Similarly you can configure an image gallery, its editing interface will look as follows:
 
