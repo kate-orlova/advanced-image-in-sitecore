@@ -40,7 +40,7 @@ All admin CSS, JavaScript and templates are defined in `\sitecore modules\` fold
 Glass Mapper ORM is used to map the advanced image types from Sitecore field values to typed business entities, see `\GlassMapper\` folder.
 
 ## 2. Processors
-`..\src\Foundation\AdvancedImage\Processors\CropProcessor.cs` is a cropping processor being called by Sitecore's Media Handler.
+There is a cropping processor specified in `..\src\Foundation\AdvancedImage\Processors\CropProcessor.cs`, it is being called by Sitecore's Media Handler.
 
 ## 3. Requests
 `..\src\Foundation\AdvancedImage\Requests\CropMediaRequest.cs` defines the cropping media request being called from the front-end and makes sure that the custom parameters are cached in `.ini` file within `/App_Data/` folder.
