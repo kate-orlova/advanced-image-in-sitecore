@@ -59,7 +59,8 @@ There is an HTML extension `RenderImageLazy()` in `..\src\Foundation\AdvancedIma
 ## 6 Config
 `..\src\Foundation\AdvancedImage\App_Config\Include\Foundation.AdvancedImage.config` specifies the image processing pipeline.
 
-`..\src\Foundation\AdvancedImage\App_Config\Include\Sitecore.Framework.Fields.AdvancedImage.config` defines the Advanced Image module settings in Sitecore.
+`..\src\Foundation\AdvancedImage\App_Config\Include\Sitecore.Framework.Fields.AdvancedImage.config` defines the Advanced Image module settings in Sitecore:
+ - **AdvancedImage.DefaultThumbnailFolderId** - an asset folder Id by default in Sitecore Media Library
 
 
 ## 7. Sitecore Package
