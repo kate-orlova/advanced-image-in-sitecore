@@ -63,6 +63,7 @@ There is an HTML extension `RenderImageLazy()` in `..\src\Foundation\AdvancedIma
  - **AdvancedImage.DefaultThumbnailFolderId** - an asset folder Id by default in Sitecore Media Library
  - protected and custom media query parameters
  - request parser
+ - cropping processor pipeline
 
 
 ## 7. Sitecore Package
