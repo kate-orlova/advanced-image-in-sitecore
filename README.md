@@ -61,6 +61,8 @@ There is an HTML extension `RenderImageLazy()` in `..\src\Foundation\AdvancedIma
 
 `..\src\Foundation\AdvancedImage\App_Config\Include\Sitecore.Framework.Fields.AdvancedImage.config` defines the Advanced Image module settings in Sitecore:
  - **AdvancedImage.DefaultThumbnailFolderId** - an asset folder Id by default in Sitecore Media Library
+ - protected and custom media query parameters
+ - request parser
 
 
 ## 7. Sitecore Package
