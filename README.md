@@ -17,7 +17,7 @@ The solution consists of the following key elements:
 1. Sitecore package
 
 ## 1. Admin Interface
-The main fields  in `\Fileds\` folder are
+The main fields  in `\Fields\` folder are
 1. **Advanced Image** - a single image
 1. **Advanced Image Gallery** - an image gallery
 1. **Slider** - to manage the focal point for an image in Stecore interface
