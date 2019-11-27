@@ -83,7 +83,7 @@ There is a Sitecore package file `Sitecore package for AdvancedImage module.zip`
 # Installation Guide
 1. Add the **AdvancedImage** project to the **Foundation** layer of your Sitecore solution and build it;
 
-1. Install the Sitecore package to have the required pre-requisite in place such as _Field Types, Data Templates_ and control elements;
+1. Install the Sitecore package to have the required pre-requisites in place such as _Field Types, Data Templates_ and control elements;
 
 1. Adapt your Entity in Sitecore for use of the advanced images:
 
