@@ -1,3 +1,4 @@
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/kate-orlova/advanced-image-in-sitecore)
 [![GitHub release](https://img.shields.io/github/release-date/kate-orlova/advanced-image-in-sitecore.svg?style=flat)](https://github.com/kate-orlova/advanced-image-in-sitecore/releases/tag/v1.0)
 [![GitHub license](https://img.shields.io/github/license/kate-orlova/advanced-image-in-sitecore.svg)](https://github.com/kate-orlova/advanced-image-in-sitecore/blob/master/LICENSE)
 ![GitHub language count](https://img.shields.io/github/languages/count/kate-orlova/advanced-image-in-sitecore.svg?style=flat)
